@@ -1,0 +1,510 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+:root{
+    --white-space:rgb(241, 241, 241);
+    --black-space: rgb(30, 34, 39);
+
+    --white-font:rgb(34, 34, 34);
+    --black-font: rgb(223, 223, 223);
+
+    --second-back: rgb(38, 50, 65);
+    --second-back: rgb(184, 184, 184);
+
+    --highlight-back: 
+}
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: rgb(241, 241, 241);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Themes */
+
+.ThemeMode{
+    position: absolute;
+    left: 1300px;
+    top: 15px;
+    cursor: pointer;
+
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;    
+}
+
+.Icon.Sun{
+    display: none;
+    filter: invert(99%) sepia(53%) saturate(18%) hue-rotate(273deg) brightness(105%) contrast(96%);
+    transition: ease-in-out 0.2s;
+    width: 30px;
+}
+
+.Icon.Moon{
+    display: block;
+    filter: invert(23%) sepia(5%) saturate(276%) hue-rotate(181deg) brightness(93%) contrast(88%);
+    transition: ease-in-out 0.2s;
+    width: 27px;
+}
+
+.ThemeMode:hover .Sun{
+    width: 33px;
+    transition: ease-in-out 0.2s;
+}
+
+.ThemeMode:hover .Moon{
+    width: 30px;
+    transition: ease-in-out 0.2s;
+}
+
+/*  */
+
+
+#Actions{
+    background-color: var(--second-back);
+    border-radius: 15px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    padding: 15px 20px;
+}
+
+.search{
+    margin: 15px;
+}
+
+.buttons button {
+    margin: 5px;
+}
+
+
+.PUp{
+    display: none;
+}
+
+.blur{
+    display: none;
+}
+
+.OpenClaim{
+    display: none;
+}
+
+.ClaimInfo{
+    display: none;
+}
+
+.PUp.active{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 0;
+    top: 0;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100vh;
+}
+
+.blur.active{
+    backdrop-filter: blur(10px);
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+}
+
+.OpenClaim.active{
+    background-color: var(--second-back);
+    z-index: 2;
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 100px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ClaimInfo.active{
+    background-color: var(--second-back);
+    z-index: 2;
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 50px;
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.InputForm{
+    padding: 5px;
+    font-size: 15px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.InputForm.OK{
+    border-width: 2px;
+    border-color: rgb(13, 194, 73);
+    border-style: solid;
+}
+
+.InputForm.NOK{
+    border-width: 2px;
+    border-color: rgb(194, 40, 13);
+    color: rgb(168, 25, 0);
+    border-style: solid;
+}
+
+.FormClaim{
+    overflow-y: scroll;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.divSpace{
+    width: 100%;
+    display: inline-block;
+}
+
+#LNCNum{
+    width: 15%;
+    margin: 5px;
+}
+
+#Forn{
+    width: 79%;
+    margin: 5px;
+}
+
+#CodItem{
+    width: 15%;
+    margin: 5px;
+}
+
+#Item{
+    width: 79%;
+    margin: 5px;
+}
+
+.DescSpace{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#Desc{
+    width: 80%;
+    resize: none;
+}
+
+#FileImg{
+    display: none;
+}
+
+.FileImgLabel{
+    background-color: rgb(202, 73, 13);
+    color: white;
+    padding: 6px 10px;
+    margin: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    align-self: center;
+    text-align: center;
+}
+
+.FileImgLabel::before{
+    content: '';
+    -webkit-mask-image: url(/assets/arrow-up-from-bracket-solid.svg);
+    mask-image: url(/assets/arrow-up-from-bracket-solid.svg);
+    width: 20px;
+    height: 20px;
+}
+
+#ClearFiles{
+    background-color: rgb(202, 13, 13);
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    margin: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    align-self: center;
+    display: none;
+}
+
+/* #FileImg::-webkit-file-upload-button{
+    visibility: hidden;
+}
+
+#FileImg::before {
+    content: 'Adicionar Imagens';
+    display: inline-block;
+    background: linear-gradient(top, #f9f9f9, #e3e3e3);
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 5px 8px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    text-shadow: 1px 1px #fff;
+    font-weight: 700;
+    font-size: 10pt;
+}
+
+
+#FileImge-input:hover::before {
+    border-color: black;
+}
+#FileImg:active::before {
+    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+} */
+
+
+.FileSpace{
+    width: 40%;
+    display: flex;
+    justify-content: space-around;
+    margin: 15px;
+}
+
+.Main{
+    width: 70%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+    margin: 15px;
+}
+
+.boxinfo{
+    background-color: var(--second-back);
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    padding: 15px 20px;
+    width: 40%;
+    border-radius: 17px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.boxinfo.Title{
+    color: red;
+}
+
+.TableClaim{
+    display: table;
+    width: 100%;
+    background-color: rgb(223, 223, 223);
+}
+
+.Row{
+    display: table-row;
+}
+
+.RowCell{
+    display: table-cell;
+    margin: 5px;
+    padding: 5px;
+    border-collapse:separate;
+    border-width: 1px 0px 0px 0px;
+    border-style: solid;
+    border-color: black;
+    text-align: center;
+}
+
+.HeadRow .RowCell{
+    background-color: rgb(26, 43, 75);
+    font-weight: 200;
+    color: white;
+}
+
+.HeadRow .RowCell:nth-child(1){
+    border-left: 1px solid;
+}
+
+.HeadRow .RowCell:nth-child(3){
+    border-right: 1px solid;
+}
+
+.Result{
+    cursor: pointer;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.CellLNC{
+    color: red;
+    /* border */
+}
+
+.ChartSpace{
+    width: 100%;
+    height: 40%;
+}
+
+#myChart{
+    background-color: rgb(209, 218, 223);
+    align-self: center;
+    border-radius: 17px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 15px;
+}
+
+#myChart2{
+    background-color: rgb(209, 218, 223);
+    align-self: center;
+    border-radius: 17px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 15px;
+}
+
+
+
+/* Reclamação */
+
+.InfoZone{
+    padding: 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+.LNCZone{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 17px;
+}
+
+.LNCRes{
+    color: red;
+}
+
+.ContactZone{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.Zone{
+    border: 1px solid black;
+    border-radius: 8px;
+    font-size: 12px;
+    display: flex;
+    margin: 5px;
+    width: 100%;
+    padding: 5px;
+    background-color: rgb(233, 233, 233);
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+}
+
+.ContZone{
+    border: 1px solid black;
+    border-radius: 8px;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+    padding: 5px;
+}
+
+.FornCon{
+    display: flex;
+    flex-direction: column;
+}
+
+.CustCon{
+    display: flex;
+    flex-direction: column;
+}
+
+.campo{
+    font-weight: bold;
+}
+
+.ItemZone{
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.ImgZone{
+    background-color: rgb(202, 73, 13);
+    color: white;
+    padding: 6px 10px;
+    margin: 5px;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+    align-self: center;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.ImgZone::before{
+    content: "";
+    -webkit-mask: url("./assets/image-solid.svg") no-repeat 50% 50%;
+    mask: url("./assets/image-solid.svg") no-repeat 50% 50%;
+    display: inline-block;
+    background-color: white;
+    mask-size: cover;
+   /* background-size: 28px 28px; */
+   height: 23px;
+   width: 23px;
+   margin: 5px;
+   vertical-align: middle;
+}
+
+
+.DescZone{
+    display: flex;
+    flex-direction: column;
+}
+
+.EncRes{
+    color: rgb(196, 62, 62);
+    text-decoration: solid 1px #000000;
+}
+
+.EspRes{
+    color: rgb(62, 120, 196);
+    text-decoration: solid 1px #000000;
+}
