@@ -2,6 +2,100 @@ LNCNum();
 
 console.log(DataHoje())
 
+$('#SubmitBtn').click(function (e) { 
+  // e.preventDefault();
+  
+var files = document.getElementById('FileImg').files;
+
+var ClaimOpen = {};
+
+ClaimOpen.LNC = $("#LNCNum").val();
+ClaimOpen.Forn = $("#Forn").val();
+
+
+ClaimOpen.Item = $("#CodItem").val();
+ClaimOpen.ItemDesc = $("#Item").val();
+
+
+ClaimOpen.Desc = $("#Desc").val();
+
+ClaimOpen.FileIndex = files.length;
+
+for (var i = 0; i < files.length; i++){
+  ClaimOpen.Files[i] = files[i];
+}
+
+console.log(files);
+
+
+// $.ajax({
+//   type: "method",
+//   url: "url",
+//   data: "data",
+//   dataType: "dataType",
+//   success: function (response) {
+    
+//   }
+// });
+
+});
+
+var Forns = ['Ensinger', 'Igus', 'Deluma']
+
+$('#Forn').on('keyup',function () { 
+  removeElements();
+
+  SortForn = Forns.sort();
+
+  for (let i of SortForn) {
+    if (
+      i.toLowerCase().startsWith($('#Forn').val().toLowerCase()) &&
+      $('#Forn').val() != ""
+    ) {
+      //create li element
+      let listItem = document.createElement("span");
+      //One common class name
+      listItem.classList.add("SugBox");
+      listItem.classList.add("Sug1");
+      listItem.setAttribute("onclick", "displayNames('" + i + "')");
+
+      //Display matched part in bold
+      let word = "<b>" + i.substr(0, $('#Forn').val().length) + "</b>";
+      word += i.substr($('#Forn').val().length);
+
+      //display the value in array
+      listItem.innerHTML = word;
+      document.querySelector(".sugSpace").appendChild(listItem);
+    }
+  }
+
+  
+});
+
+function displayNames(value) {
+  $('#Forn').val(value);
+  removeElements();
+}
+
+function removeElements() {
+  //clear all the item
+  let items = document.querySelectorAll(".SugBox");
+  items.forEach((item) => {
+    item.remove();
+  });
+}
+
+// $('.SugBox').click(function (e) { 
+//   e.preventDefault();
+
+//   console.log(e);
+
+//   // var text = e.target.outerText;
+
+//   // $('#Forn').val(text);
+
+// });
+
 $('#OpenButton').click(function (e) { 
     e.preventDefault();
     
@@ -24,14 +118,14 @@ $('#CancelBtn').click(function (e) {
 function LNCNum(){
 
     var data = new Date();
-    var ano = data.getYear();
+    var ano = data.getFullYear().toString().substr(-2);
 
-    var seq = 12;
+    var seq = 50;
 
-    if (seq < 100){
-        seq = '0' + seq;
-    } else if (seq < 10){
+    if (seq < 10){
         seq = '00' + seq;
+    } else if (seq < 100){
+        seq = '0' + seq;
     }
 
     $('#LNCNum').val(`${seq}/${ano}`);
@@ -62,6 +156,7 @@ $(".ThemeMode").click(function (e) {
         $(".Icon.Sun").css("display", "block");
 
         $(":root").css("--second-back", "rgb(38, 50, 65)");
+        $(":root").css("--highlight-back", "rgb(35, 60, 90)");
     }
 
     if (HasSun == true) {
@@ -75,16 +170,19 @@ $(".ThemeMode").click(function (e) {
         $(".Icon.Sun").css("display", "none");
 
         $(":root").css("--second-back", "rgb(184, 184, 184)");
-    }
+        $(":root").css("--highlight-back", "rgb(233, 233, 233)");
     
-});
+    }
 
+  });
 
 $("#FileImg").change(function (e) { 
     e.preventDefault();
 
     var file = e.target.files[0];
     var quant = $(this)[0].files.length;
+
+    console.log(file);
 
     $(".FileImgLabel").html(`Imagens selecionadas [${quant}]`);
 
@@ -169,6 +267,21 @@ $('#OKBtn').click(function (e) {
     $(".ImgZone").html(Claim.Annex);
 });
 
+$('.ImgZone').click(function (e) { 
+  e.preventDefault();
+
+  $('.Imgs').addClass('active');
+  // $('.ClaimInfo').removeClass('active');
+
+})
+
+$('.btnclose').click(function (e) { 
+  e.preventDefault();
+
+  $('.Imgs').removeClass('active');
+
+})
+
 // Gráficos
 
 const ctx = document.getElementById('myChart');
@@ -240,3 +353,51 @@ Chart.defaults.color = '#000';
       }
     }
   });
+
+  // Slide Show Claim
+
+var actualSlide = 1;
+
+
+
+$(".GoBack").click(function (e) { 
+  e.preventDefault();
+  
+  var filhos = $(".imgShow").children().length;
+  var images = document.querySelectorAll('.imge');
+
+  $(".TotalPages").html(images.length);
+  if (actualSlide > 1) {
+    images[actualSlide - 1].classList.remove("active");
+    actualSlide--;
+    images[actualSlide - 1].classList.add("active");
+    $(".ActualPage").html(actualSlide);
+  } else if (actualSlide = 1) {
+    images[actualSlide - 1].classList.remove("active");
+    actualSlide = images.length;
+    $(".ActualPage").html(actualSlide);
+    images[actualSlide - 1].classList.add("active");
+  }
+
+});
+
+$(".GoFor").click(function (e) { 
+  e.preventDefault();
+  
+  var filhos = $(".imgShow").children().length;
+  var images = document.querySelectorAll('.imge');
+
+  $(".TotalPages").html(images.length);
+  if (actualSlide < filhos) {
+    images[actualSlide - 1].classList.remove("active");
+    actualSlide++;
+    $(".ActualPage").html(actualSlide);
+    images[actualSlide - 1].classList.add("active");
+  } else if (actualSlide = filhos) {
+    images[actualSlide - 1].classList.remove("active");
+    actualSlide = 1;
+    $(".ActualPage").html(actualSlide);
+    images[actualSlide - 1].classList.add("active");
+  }
+
+});

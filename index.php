@@ -1,3 +1,38 @@
+<?php
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      $LNC = $_POST['LNC'];
+      $Forn = $_POST['Forn'];
+
+      $Item = $_POST['Item'];
+      $DescItem = $_POST['DescItem'];
+      $Desc = $_POST['Desc'];
+      $QuantFiles = count($_FILES['FileImg']['name']);
+
+      $fileExt = pathinfo($_FILES['FileImg']['name'][0])['extension'];
+
+      $path = realpath('./data/');
+
+      $pathtoSave = $path.'/'.Dataa();
+
+    mkdir($pathtoSave, 0777, true);
+
+    for ($i = 0; $i < $QuantFiles - 1;$i++){
+        move_uploaded_file($_FILES['FileImg']['tmp_name'][$i], $pathtoSave.'/'.uniqid().'.'.$fileExt);
+    }
+}
+
+
+function Dataa() {
+
+    date_default_timezone_set('America/Sao_Paulo');
+
+    return date('Y-m-d H_i_s');
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,29 +89,35 @@
         <div class="OpenClaim">
             <h5>Nova Reclamação</h5>
             <hr>
+            <form id="FormtoClaim" action="" method="post" enctype="multipart/form-data">
             <div class="FormClaim">
-                <div class="LNCSpace divSpace">
-                    <input placeholder="Fornecedor" class="InputForm" name="Forn" id="Forn">
-                    <input placeholder="LNC" class="InputForm" name="LNC" id="LNCNum">
+                    <div class="LNCSpace divSpace">
+                        <input placeholder="Fornecedor" class="InputForm" name="Forn" id="Forn">
+                        <input placeholder="LNC" class="InputForm" name="LNC" id="LNCNum">
+                        <div class="sugSpace active">
+                        </div>
+                    </div>
+                    <div class="ItemSpace divSpace">
+                        <input placeholder="Item" class="InputForm" name="Item" id="CodItem">
+                        <input placeholder="Descrição do Item" class="InputForm" name="DescItem" id="Item">
+                    </div>
+                    <div class="DescSpace divSpace">
+                        <textarea placeholder="Descrição" class="InputForm" name="Desc" id="Desc" cols="30" rows="10"></textarea>
+                    </div>
+                    <div class="FileSpace divSpace">
+                        <input multiple class="InputForm FileImg" accept="image/png, image/gif, image/jpeg" type="file" name="FileImg[]" id="FileImg">
+                        <label for="FileImg" class="FileImgLabel">Adicionar imagens</label>
+                        <button id="ClearFiles">X</button>
+                    </div>
                 </div>
-                <div class="ItemSpace divSpace">
-                    <input placeholder="Item" class="InputForm" name="Item" id="CodItem">
-                    <input placeholder="Descrição do Item" class="InputForm" name="Item" id="Item">
+                <hr>
+                <div class="btnsub">
+                    <button id="CancelBtn" class="btn btn-danger">Cancelar</button>
+                    <label for=""></label>
+                    <input class="btn btn-success" type="submit" value="Criar">
+                    <!-- <button  >Criar</button> -->
                 </div>
-                <div class="DescSpace divSpace">
-                    <textarea placeholder="Descrição" class="InputForm" name="Desc" id="Desc" cols="30" rows="10"></textarea>
-                </div>
-                <div class="FileSpace divSpace">
-                    <input multiple class="InputForm FileImg" accept="image/png, image/gif, image/jpeg" type="file" name="FileImg" id="FileImg">
-                    <label for="FileImg" class="FileImgLabel">Adicionar imagens</label>
-                    <button id="ClearFiles">X</button>
-                </div>
-            </div>
-            <hr>
-            <div class="btnsub">
-                <button id="CancelBtn" class="btn btn-danger">Cancelar</button>
-                <button id="SubmitBtn" class="btn btn-success">Criar</button>
-            </div>
+            </form>
         </div>
         <div class="ClaimInfo">
             <div class="InfoZone">

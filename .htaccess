@@ -1,0 +1,5 @@
+RewriteEngine on
+
+
+# Inicio
+RewriteRule home ./index.php
