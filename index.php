@@ -114,7 +114,7 @@ function Dataa() {
                 <div class="btnsub">
                     <button id="CancelBtn" class="btn btn-danger">Cancelar</button>
                     <label for=""></label>
-                    <input class="btn btn-success" type="submit" value="Criar">
+                    <input class="btn btn-success" id=" " type="submit" value="Criar">
                     <!-- <button  >Criar</button> -->
                 </div>
             </form>
@@ -130,7 +130,7 @@ function Dataa() {
                         <span>Forn Info:</span>
                         <div class="FornCon">
                             <span>
-                                Cliente:
+                                Fornecedor:
                                 <span class="FornName campo"></span>
                             </span>
                             <span>

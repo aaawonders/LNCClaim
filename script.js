@@ -1,3 +1,66 @@
+$(document).ready(function () {
+  attTableClaim();
+});
+
+function attTableClaim(){
+  $.ajax({
+    type: "POST",
+    url: "AttTable.php",
+    data: "",
+    dataType: "html",
+    beforeSend: function () {
+      $('.Row.Result').remove();
+      $('.TableClaim').append('<span class="Wait">Loading...</span>');
+    },
+    success: function (response) {
+      
+      $('.Wait').remove();
+      $('.TableClaim').append(response);
+
+      $('.Result').on('click', function (e) { 
+        e.preventDefault();
+    
+        console.log('teste');
+        $('.PUp').addClass('active');
+        $('.blur').addClass('active');
+        $('.ClaimInfo').addClass('active');
+    
+    })
+    
+    },
+    error: function (response) {
+      $('.Wait').remove();
+      $('.TableClaim').append(response);
+    }
+  });
+}
+
+
+$('#FormtoClaim').submit(function (e) { 
+  e.preventDefault();
+  
+  var form = $(this);
+
+  $.ajax({
+    type: "POST",
+    url: "formGO.php",
+    data: form.serialize(),
+    success: function (response) {
+
+      $()
+      console.log(response);
+
+      $('.PUp').removeClass('active');
+      $('.blur').removeClass('active');
+      $('.OpenClaim').removeClass('active');
+
+      attTableClaim();
+    }
+  });
+
+});
+
+
 LNCNum();
 
 console.log(DataHoje())
@@ -224,9 +287,11 @@ Claim.DescEnc = "Peças sem todas as buchas.";
 
 Claim.Annex = 2;
 
-$('.Result.S1').click(function (e) { 
+
+$('.Result').on('click', function (e) { 
     e.preventDefault();
 
+    console.log('teste');
     $('.PUp').addClass('active');
     $('.blur').addClass('active');
     $('.ClaimInfo').addClass('active');
