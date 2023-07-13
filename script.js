@@ -17,6 +17,12 @@ function attTableClaim(){
       $('.Wait').remove();
       $('.TableClaim').append(response);
 
+      if ($('.Row.Result').html() == response){
+        console.log('Success')
+      } else {
+        console.log('Error');
+      }
+
       $('.Result').on('click', function (e) { 
         e.preventDefault();
     
@@ -36,25 +42,50 @@ function attTableClaim(){
 }
 
 
+setInterval(function () {
+
+  var claims = document.querySelectorAll('.Row.Result');
+
+  
+
+  
+
+},1000)
+
+function alertarClaim(classes, message){
+
+  $(`.${classes}`).after(`<div class="alertar alert alert-danger w-100" role="alert">
+  teste
+  </div>`);
+
+  $('.alertar').html(message);
+
+}
+
 $('#FormtoClaim').submit(function (e) { 
   e.preventDefault();
   
-  var form = $(this);
+  var form = new FormData(this);
 
   $.ajax({
     type: "POST",
     url: "formGO.php",
-    data: form.serialize(),
-    success: function (response) {
+    data: form,
+    processData: false,
+    contentType: false,
+    success: function (response, status) {
 
-      $()
       console.log(response);
+      console.log(status);
 
       $('.PUp').removeClass('active');
       $('.blur').removeClass('active');
       $('.OpenClaim').removeClass('active');
 
       attTableClaim();
+    },
+    error: function (response) {
+        alertarClaim('hrClaim', response.responseText);
     }
   });
 
@@ -201,6 +232,43 @@ function DataHoje() {
     return data.getYear();
 }
 
+function ThemeChange(Type, click){
+
+  if (Type === "Sun") {
+    $("body").css("background-color", "var(--black-space)");
+    $("body").css("color", "var(--black-font)");
+
+    $(".ThemeMode").removeClass("Moon");
+    $(".ThemeMode").addClass("Sun");
+
+    $(".Icon.Moon").css("display", "none");
+    $(".Icon.Sun").css("display", "block");
+
+    $(":root").css("--second-back", "rgb(38, 50, 65)");
+    $(":root").css("--highlight-back", "rgb(35, 60, 90)");
+  } else if (Type === "Moon") {
+    $("body").css("background-color", "var(--white-space)");
+    $("body").css("color", "var(--white-font)");
+
+    $(".ThemeMode").removeClass("Sun");
+    $(".ThemeMode").addClass("Moon");
+
+    $(".Icon.Moon").css("display", "block");
+    $(".Icon.Sun").css("display", "none");
+
+    $(":root").css("--second-back", "rgb(184, 184, 184)");
+    $(":root").css("--highlight-back", "rgb(233, 233, 233)");
+  }
+
+  if (click === true) {
+    if (Type === "Sun") {
+      document.cookie = "ThemeSession=Moon";
+  } else if (Type === "Moon"){
+      document.cookie = "ThemeSession=Sun";
+  }
+}
+}
+
 $(".ThemeMode").click(function (e) { 
     e.preventDefault();
     
@@ -209,35 +277,15 @@ $(".ThemeMode").click(function (e) {
     var HasSun = $(".ThemeMode").hasClass("Sun");
 
     if (HasMoon == true) {
-        $("body").css("background-color", "var(--black-space)");
-        $("body").css("color", "var(--black-font)");
-
-        $(".ThemeMode").removeClass("Moon");
-        $(".ThemeMode").addClass("Sun");
-
-        $(".Icon.Moon").css("display", "none");
-        $(".Icon.Sun").css("display", "block");
-
-        $(":root").css("--second-back", "rgb(38, 50, 65)");
-        $(":root").css("--highlight-back", "rgb(35, 60, 90)");
+      ThemeChange('Sun', true)
     }
 
     if (HasSun == true) {
-        $("body").css("background-color", "var(--white-space)");
-        $("body").css("color", "var(--white-font)");
-
-        $(".ThemeMode").removeClass("Sun");
-        $(".ThemeMode").addClass("Moon");
-
-        $(".Icon.Moon").css("display", "block");
-        $(".Icon.Sun").css("display", "none");
-
-        $(":root").css("--second-back", "rgb(184, 184, 184)");
-        $(":root").css("--highlight-back", "rgb(233, 233, 233)");
-    
+      ThemeChange('Moon', true)
     }
 
-  });
+});
+
 
 $("#FileImg").change(function (e) { 
     e.preventDefault();
@@ -465,4 +513,4 @@ $(".GoFor").click(function (e) {
     images[actualSlide - 1].classList.add("active");
   }
 
-});
+})

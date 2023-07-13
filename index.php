@@ -1,35 +1,26 @@
 <?php
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $LNC = $_POST['LNC'];
-      $Forn = $_POST['Forn'];
+if (!isset($_COOKIE['Theme'])){
+    setcookie("Theme", "Day", time() + (10 * 365 * 24 * 60 * 60));
+}
 
-      $Item = $_POST['Item'];
-      $DescItem = $_POST['DescItem'];
-      $Desc = $_POST['Desc'];
-      $QuantFiles = count($_FILES['FileImg']['name']);
-
-      $fileExt = pathinfo($_FILES['FileImg']['name'][0])['extension'];
-
-      $path = realpath('./data/');
-
-      $pathtoSave = $path.'/'.Dataa();
-
-    mkdir($pathtoSave, 0777, true);
-
-    for ($i = 0; $i < $QuantFiles - 1;$i++){
-        move_uploaded_file($_FILES['FileImg']['tmp_name'][$i], $pathtoSave.'/'.uniqid().'.'.$fileExt);
+if (isset($_COOKIE['ThemeSession'])){
+    if ($_COOKIE['ThemeSession'] == 'Moon'){
+        $_COOKIE['Theme'] = 'Moon';
+    } else if ($_COOKIE['ThemeSession'] == 'Sun'){
+        $_COOKIE['Theme'] = 'Sun';
     }
 }
 
-
-function Dataa() {
-
-    date_default_timezone_set('America/Sao_Paulo');
-
-    return date('Y-m-d H_i_s');
+if (isset($_COOKIE['Theme'])){
+    if ($_COOKIE['Theme'] == 'Moon'){
+        echo "<script>ThemeChange('Moon', false);</script>";
+    } else if ($_COOKIE['Theme'] == 'Sun'){
+        echo "<script>ThemeChange('Sun', false);</script>";
+    }
 }
+
 
 ?>
 
@@ -82,13 +73,16 @@ function Dataa() {
                     <div class="RowCell CellText CellData">01/01/2023</div>
                 </div>
             </div>
+            <div class="UpdateIn">
+                <Span>Atualizado em 13/07/2023 às 13:58 por Cláudio Idalgo</Span>
+            </div>
         </div>
     </div>
     <div class="PUp">
         <div class="blur"></div>
         <div class="OpenClaim">
             <h5>Nova Reclamação</h5>
-            <hr>
+            <hr class="hrClaim">
             <form id="FormtoClaim" action="" method="post" enctype="multipart/form-data">
             <div class="FormClaim">
                     <div class="LNCSpace divSpace">
@@ -211,7 +205,7 @@ function Dataa() {
 
 
 </body>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="./script.js"></script>
