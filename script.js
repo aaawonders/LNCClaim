@@ -5,7 +5,7 @@ $(document).ready(function () {
 function attTableClaim(){
   $.ajax({
     type: "POST",
-    url: "AttTable.php",
+    url: "https://192.168.0.190/testes/lnc/Ajax/AttTable.php",
     data: "",
     dataType: "html",
     beforeSend: function () {
@@ -69,7 +69,7 @@ $('#FormtoClaim').submit(function (e) {
 
   $.ajax({
     type: "POST",
-    url: "formGO.php",
+    url: "https://192.168.0.190/testes/lnc/Ajax/Ajax/formGO.php",
     data: form,
     processData: false,
     contentType: false,

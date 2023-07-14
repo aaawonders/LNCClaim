@@ -1,6 +1,8 @@
 <?php
 
-require_once (realpath (__DIR__ .'/src/sql/SQLIN.php'));
+header("Access-Control-Allow-Origin: *");
+
+require_once (realpath (__DIR__ .'./../src/sql/SQLIN.php'));
 
 $sql = "SELECT * FROM claims";
 

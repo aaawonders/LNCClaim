@@ -1,7 +1,8 @@
 <?php
 
-require_once (realpath (__DIR__ .'/src/sql/SQLIN.php'));
+header("Access-Control-Allow-Origin: *");
 
+require_once (realpath (__DIR__ .'/../src/sql/SQLIN.php'));
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -14,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $LNCAno = DateTime::createFromFormat('y', intval($LNCSplit[1]));
         $LNCAno = $LNCAno->format('Y');
-
 
         $Forn = $_POST['Forn'];
         $Item = $_POST['Item'];
@@ -59,6 +59,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo $ErroLog;
         http_response_code(400);
     }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET'){
+    echo $_GET['teste'];
 }
 
 ?>

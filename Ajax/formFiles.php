@@ -1,10 +1,12 @@
 <?php
 
 
-// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-//     if (file_exists($_FILES['FileImg']['tmp_name'][0]) || is_uploaded_file($_FILES['FileImg']['tmp_name'][0])){
-        require_once (realpath (__DIR__ .'/src/sql/SQLIN.php'));
+header("Access-Control-Allow-Origin: *");
+
+// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//     if (file_exists($_FILES['FileImg']['tmp_name']) || is_uploaded_file($_FILES['FileImg']['tmp_name'])){
+        require_once (realpath (__DIR__ .'/../src/sql/SQLIN.php'));
 
         // Adicionar Pasta
 
@@ -17,10 +19,12 @@
 
         $QuantFiles = count($_FILES['FileImg']['name']);
 
-
-        $path = realpath('./data/');
+        $path = realpath('./../data/');
         $folder = Dataa();
         $pathtoSave = $path.'/'.$folder;
+
+        echo $pathtoSave;
+
         mkdir($pathtoSave, 0777, true);
 
         for ($i = 0; $i < $QuantFiles; $i++){

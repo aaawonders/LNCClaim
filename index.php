@@ -86,10 +86,11 @@ if (isset($_COOKIE['Theme'])){
             <form id="FormtoClaim" action="" method="post" enctype="multipart/form-data">
             <div class="FormClaim">
                     <div class="LNCSpace divSpace">
-                        <input placeholder="Fornecedor" class="InputForm" name="Forn" id="Forn">
-                        <input placeholder="LNC" class="InputForm" name="LNC" id="LNCNum">
-                        <div class="sugSpace active">
+                        <div class="FornAct">
+                            <input placeholder="Fornecedor" class="InputForm" name="Forn" id="Forn">
+                            <div class="sugSpace active"></div>
                         </div>
+                        <input placeholder="LNC" class="InputForm" name="LNC" id="LNCNum">
                     </div>
                     <div class="ItemSpace divSpace">
                         <input placeholder="Item" class="InputForm" name="Item" id="CodItem">
@@ -102,6 +103,9 @@ if (isset($_COOKIE['Theme'])){
                         <input multiple class="InputForm FileImg" accept="image/png, image/gif, image/jpeg" type="file" name="FileImg[]" id="FileImg">
                         <label for="FileImg" class="FileImgLabel">Adicionar imagens</label>
                         <button id="ClearFiles">X</button>
+                    </div>
+                    <div class="RespSpace divSpace">
+                        <input placeholder="Responsável" class="InputForm" name="Resp" id="Resp">
                     </div>
                 </div>
                 <hr>
