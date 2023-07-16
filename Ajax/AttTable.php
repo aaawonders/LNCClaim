@@ -1,6 +1,7 @@
 <?php
 
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers", "Origin, X-Request-Width, Content-Type, Accept");
 
 require_once (realpath (__DIR__ .'./../src/sql/SQLIN.php'));
 
@@ -34,11 +35,13 @@ for ($i = 0; $i < count($LNC); $i++) {
 }
 
 for ($i = 0; $i < count($LNC); $i++) {
-    echo "<div class='Row Result S$i'>";
+    echo "<div lnc='$LNC[$i]' class='Row Result S$i'>";
     echo "<div class='RowCell CellText CellLNC'>$LNC[$i]</div>";
     echo "<div class='RowCell CellText CellForn'>$Forn[$i]</div>";
     echo "<div class='RowCell CellText CellData'>$Data[$i]</div>";
     echo "</div>";
 }
+
+
 
 ?>

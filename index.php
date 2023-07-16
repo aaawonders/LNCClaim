@@ -22,6 +22,7 @@ if (isset($_COOKIE['Theme'])){
 }
 
 
+
 ?>
 
 <!DOCTYPE html>
@@ -206,7 +207,6 @@ if (isset($_COOKIE['Theme'])){
             </div>
         </div>
     </div>
-
 
 </body>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></>

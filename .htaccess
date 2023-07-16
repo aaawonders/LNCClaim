@@ -3,3 +3,5 @@ RewriteEngine on
 
 # Inicio
 RewriteRule home ./index.php
+
+RewriteRule home ./table/table.php
