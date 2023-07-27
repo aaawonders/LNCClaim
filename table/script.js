@@ -228,3 +228,37 @@ function ClaimsTipos(Tipo){
         return 'ToDo';
     }
 }
+
+function OpenClaim(LNC){
+    console.log(LNC);
+}
+
+$('#SearchInput').on('keyup',function () { 
+    removeElements();
+  
+    SortClaims = getClaims().sort();
+  
+    for (let i of SortForn) {
+      if (
+        i.toLowerCase().startsWith($('#SearchInput').val().toLowerCase()) &&
+        $('#SearchInput').val() != ""
+      ) {
+        //create li element
+        let listItem = document.createElement("span");
+        //One common class name
+        listItem.classList.add("SugBox");
+        listItem.classList.add("Sug1");
+        listItem.setAttribute("onclick", "displayNames('" + i + "')");
+  
+        //Display matched part in bold
+        let word = "<b>" + i.substr(0, $('#Forn').val().length) + "</b>";
+        word += i.substr($('#Forn').val().length);
+  
+        //display the value in array
+        listItem.innerHTML = word;
+        document.querySelector(".sugSpace").appendChild(listItem);
+      }
+    }
+  
+    
+  });
