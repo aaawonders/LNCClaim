@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13-Jul-2023 às 12:29
+-- Tempo de geração: 28-Jul-2023 às 21:29
 -- Versão do servidor: 10.4.24-MariaDB
 -- versão do PHP: 8.1.6
 
@@ -36,6 +36,15 @@ CREATE TABLE `arquivos` (
   `Formato` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Extraindo dados da tabela `arquivos`
+--
+
+INSERT INTO `arquivos` (`Seq.`, `LNC`, `Data Adicao`, `Nome`, `Local`, `Formato`) VALUES
+(44, 0, '2023-07-14 12:40:27', '64b16c6bea12b.', '2023-07-14 12_40_27', ''),
+(45, 0, '2023-07-14 12:40:39', '64b16c77cad6d.', '2023-07-14 12_40_39', ''),
+(46, 0, '2023-07-14 12:40:57', '64b16c89ae0a9.', '2023-07-14 12_40_57', '');
+
 -- --------------------------------------------------------
 
 --
@@ -49,6 +58,7 @@ CREATE TABLE `claims` (
   `Data de Abertura` date DEFAULT NULL,
   `Forn` varchar(255) DEFAULT NULL,
   `Item` varchar(50) DEFAULT NULL,
+  `Status` varchar(50) DEFAULT NULL,
   `Descricao` varchar(255) DEFAULT NULL,
   `Encontrado` varchar(50) DEFAULT NULL,
   `Especificado` varchar(50) DEFAULT NULL,
@@ -63,9 +73,35 @@ CREATE TABLE `claims` (
 -- Extraindo dados da tabela `claims`
 --
 
-INSERT INTO `claims` (`Seq.`, `LNC`, `Ano`, `Data de Abertura`, `Forn`, `Item`, `Descricao`, `Encontrado`, `Especificado`, `8D`, `Arquivo`, `Resp`, `Data Criacao`, `Data Edicao`) VALUES
-(2, 1, 2023, '2023-07-12', 'Ensinger', 'C100017', 'Isso é um teste', NULL, NULL, NULL, NULL, NULL, '2023-07-12 08:29:43', NULL),
-(12, 50, 2023, '2023-07-12', 'Ensinger', 'C001017', 'fsafsaf', NULL, NULL, NULL, NULL, NULL, '2023-07-12 16:34:00', NULL);
+INSERT INTO `claims` (`Seq.`, `LNC`, `Ano`, `Data de Abertura`, `Forn`, `Item`, `Status`, `Descricao`, `Encontrado`, `Especificado`, `8D`, `Arquivo`, `Resp`, `Data Criacao`, `Data Edicao`) VALUES
+(2, 1, 2023, '2023-07-12', 'Ensinger', 'C100017', NULL, 'Isso é um teste', NULL, NULL, NULL, NULL, NULL, '2023-07-12 08:29:43', NULL),
+(24, 51, 2023, '2023-07-14', 'Ensinger', 'C100017', NULL, 'Isso é um teste', NULL, NULL, NULL, NULL, NULL, '2023-07-14 12:35:30', NULL),
+(25, 3, 23, '2023-07-04', 'Deluma', 'C100002', 'Aberto', 'Uma Falha', NULL, NULL, NULL, NULL, NULL, '2023-07-26 13:55:55', NULL),
+(26, 5, 23, '2023-07-06', 'Igus', 'C011002', 'Aberto', 'Uma Falha', NULL, NULL, NULL, NULL, NULL, '2023-07-26 13:55:55', NULL),
+(27, 9, 23, '2023-06-04', 'Miba', 'C005009', 'Aberto', 'Uma Falha', NULL, NULL, NULL, NULL, NULL, '2023-07-28 11:10:55', NULL),
+(28, 66, 23, '2023-01-15', 'Schaeffler', 'C002015', 'Aberto', 'Uma Falha', NULL, NULL, NULL, NULL, NULL, '2023-07-28 11:10:55', NULL),
+(30, 50, 2023, '2023-07-28', 'Ensinger', 'C001017', NULL, '', NULL, NULL, NULL, NULL, 'Cláudio Idalgo', '2023-07-28 15:49:58', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `claimsby`
+--
+
+CREATE TABLE `claimsby` (
+  `Seq` int(11) NOT NULL,
+  `Resp` varchar(255) DEFAULT NULL,
+  `LNC` varchar(10) DEFAULT NULL,
+  `Data` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `claimsby`
+--
+
+INSERT INTO `claimsby` (`Seq`, `Resp`, `LNC`, `Data`) VALUES
+(1, 'Cláudio Idalgo', '050/23', '2023-07-28 15:49:58'),
+(2, 'Cláudio Idalgo', '066/23', '2023-07-28 11:10:58');
 
 -- --------------------------------------------------------
 
@@ -113,6 +149,32 @@ INSERT INTO `pecas` (`Seq.`, `Cod`, `Descricao`, `Forn`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `pessoas`
+--
+
+CREATE TABLE `pessoas` (
+  `Seq` int(11) NOT NULL,
+  `ID` int(11) DEFAULT NULL,
+  `Nome` varchar(60) DEFAULT NULL,
+  `Sobrenome` varchar(60) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `pessoas`
+--
+
+INSERT INTO `pessoas` (`Seq`, `ID`, `Nome`, `Sobrenome`) VALUES
+(1, 1, 'André', 'Silva'),
+(2, 2, 'Sander', 'Benevides'),
+(3, 3, 'Daniela', 'Mendes'),
+(4, 4, 'Cláudio', 'Idalgo'),
+(5, 5, 'Agnaldo', 'Bedin'),
+(6, 6, 'Marli', 'Previatto'),
+(7, 7, 'Fábio', 'França');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `views`
 --
 
@@ -138,6 +200,12 @@ ALTER TABLE `claims`
   ADD PRIMARY KEY (`Seq.`);
 
 --
+-- Índices para tabela `claimsby`
+--
+ALTER TABLE `claimsby`
+  ADD PRIMARY KEY (`Seq`);
+
+--
 -- Índices para tabela `fornecedores`
 --
 ALTER TABLE `fornecedores`
@@ -148,6 +216,12 @@ ALTER TABLE `fornecedores`
 --
 ALTER TABLE `pecas`
   ADD PRIMARY KEY (`Seq.`);
+
+--
+-- Índices para tabela `pessoas`
+--
+ALTER TABLE `pessoas`
+  ADD PRIMARY KEY (`Seq`);
 
 --
 -- Índices para tabela `views`
@@ -163,13 +237,19 @@ ALTER TABLE `views`
 -- AUTO_INCREMENT de tabela `arquivos`
 --
 ALTER TABLE `arquivos`
-  MODIFY `Seq.` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `Seq.` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT de tabela `claims`
 --
 ALTER TABLE `claims`
-  MODIFY `Seq.` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `Seq.` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT de tabela `claimsby`
+--
+ALTER TABLE `claimsby`
+  MODIFY `Seq` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `fornecedores`
@@ -182,6 +262,12 @@ ALTER TABLE `fornecedores`
 --
 ALTER TABLE `pecas`
   MODIFY `Seq.` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de tabela `pessoas`
+--
+ALTER TABLE `pessoas`
+  MODIFY `Seq` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `views`

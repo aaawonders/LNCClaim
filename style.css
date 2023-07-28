@@ -395,6 +395,34 @@ body {
     margin-top: 15px;
 }
 
+.charts .Title{
+    position: relative;
+    display: flex;
+    text-align: center;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.updateChart{
+    position: absolute;
+    padding: 2px;
+    top: -4px;
+    left: 220px;
+}
+
+.Icon.Update.Chart{
+    filter: invert(32%) sepia(13%) saturate(26%) hue-rotate(359deg) brightness(97%) contrast(99%);
+    width: 24px;
+    cursor: pointer;
+    transition: ease-in-out 0.2s;
+}
+
+.Icon.Update.Chart:hover{
+    filter: invert(45%) sepia(2%) saturate(16%) hue-rotate(14deg) brightness(93%) contrast(86%);
+    transform: scale(110%);
+    transition: ease-in-out 0.2s;
+}
 
 
 /* Reclamação */

@@ -1,6 +1,7 @@
 <?php
 
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers", "Origin, X-Request-Width, Content-Type, Accept");
 
 require_once (realpath (__DIR__ .'/../src/sql/SQLIN.php'));
 
@@ -19,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $Forn = $_POST['Forn'];
         $Item = $_POST['Item'];
         $Desc = $_POST['Desc'];
+        $Resp = $_POST['Resp'];
 
         $sql = "SELECT * FROM claims WHERE LNC = '$LNCSeq'";
 
@@ -32,8 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $DataCriacao = date('Y-m-d H:i:s',time());
             $DataAbertura = date('Y-m-d',time());
     
-            $sql = " INSERT INTO `claims` (`LNC`, `Ano`, `Data de Abertura`, `Forn`, `Item`, `Descricao`, `Data Criacao`) 
-            VALUES ('$LNCSeq', '$LNCAno', '$DataAbertura', '$Forn', '$Item','$Desc', '$DataCriacao')";
+            $sql = " INSERT INTO `claims` (`LNC`, `Ano`, `Data de Abertura`, `Forn`, `Item`, `Descricao`, `Resp`,`Data Criacao`) 
+            VALUES ('$LNCSeq', '$LNCAno', '$DataAbertura', '$Forn', '$Item','$Desc', '$Resp','$DataCriacao')";
     
             mysqli_query($conn, $sql) or die("Falha na execução da query: " . $mysqli->error);  
             

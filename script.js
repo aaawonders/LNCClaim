@@ -1,12 +1,42 @@
-$(document).ready(function () {
+$(document).ready(function () {  
   attTableClaim();
+  attTableBy();
+  
+  updateCharts();
 });
+
+var labels1 = [];
+var labels2 = [];
+var values1 = [];
+var values2 = [];
+
+function attTableBy(){
+  $.ajax({
+    type: "GET",
+    url: "https://192.168.0.190/testes/lnc/Ajax/AttTable.php",
+    data: "AttTableBy=true",
+    dataType: "html",
+    beforeSend: function () {
+      // $('.Row.Result').remove();
+      // $('.TableClaim').append('<span class="Wait">Loading...</span>');
+    },
+    success: function (response) {
+
+      console.log(response);
+      $(".UpdateIn span").html(response);
+    },
+    error: function (response) {
+      $('.Wait').remove();
+      $('.TableClaim').append(response);
+    }
+  });
+}
 
 function attTableClaim(){
   $.ajax({
-    type: "POST",
+    type: "GET",
     url: "https://192.168.0.190/testes/lnc/Ajax/AttTable.php",
-    data: "",
+    data: "Table=true",
     dataType: "html",
     beforeSend: function () {
       $('.Row.Result').remove();
@@ -30,6 +60,8 @@ function attTableClaim(){
         $('.PUp').addClass('active');
         $('.blur').addClass('active');
         $('.ClaimInfo').addClass('active');
+
+        attTableBy();
     
     })
     
@@ -43,23 +75,14 @@ function attTableClaim(){
 
 
 setInterval(function () {
-
   var claims = document.querySelectorAll('.Row.Result');
-
-  
-
-  
-
 },1000)
 
 function alertarClaim(classes, message){
-
   $(`.${classes}`).after(`<div class="alertar alert alert-danger w-100" role="alert">
   teste
   </div>`);
-
   $('.alertar').html(message);
-
 }
 
 $('#FormtoClaim').submit(function (e) { 
@@ -69,7 +92,7 @@ $('#FormtoClaim').submit(function (e) {
 
   $.ajax({
     type: "POST",
-    url: "https://192.168.0.190/testes/lnc/Ajax/Ajax/formGO.php",
+    url: "https://192.168.0.190/testes/lnc/Ajax/formGO.php",
     data: form,
     processData: false,
     contentType: false,
@@ -397,75 +420,133 @@ $('.btnclose').click(function (e) {
 
 // Gráficos
 
-const ctx = document.getElementById('myChart');
+// var labels1 = ['Ensinger', 'Deluma'];
+// var labels2 = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'];
+// var values1 = [2, 7];
+// var values2 = [2, 10, 2, 4, 7, 9];
 
-  new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ['Ensinger', 'Deluma'],
-      datasets: [{
-        label: 'Reclamações',
-        data: [2, 7],
-        borderWidth: 0.5
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-            display: false
-        },            
-        title: {
-            display: true,
-            text: 'Reclamações de 2023 por fornececedor',
-            color: '#000000'
-        }
-      },
-      layout: {
-        padding: 5,
+// var labels1 = [];
+// var labels2 = [];
+// var values1 = [];
+// var values2 = [];
+
+// const ctx = document.getElementById('myChart');
+
+function chart1(){
+}
+
+const data = {
+  labels: labels1,
+  datasets: [{
+    label: 'Reclamações',
+    data: values1,
+    borderWidth: 0.5,
+    borderColor: '#eb4637',
+    backgroundColor: '#f5a899',
+  }]
+};
+
+const config = {
+  type: 'doughnut',
+  data: data,
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+          display: false
+      },            
+      title: {
+          display: true,
+          text: 'Reclamações de 2023 por fornececedor',
+          color: '#000000'
       }
-    }
-  });
-
-  const ctx2 = document.getElementById('myChart2');
-
-Chart.defaults.color = '#000';
-
-  new Chart(ctx2, {
-    type: 'bar',
-    data: {
-      labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-      datasets: [{
-        label: 'Reclamações',
-        data: [2, 10, 2, 4, 7, 9],
-        borderWidth: 0
-      }]
     },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-            display: false
-        },            
-        title: {
-            display: true,
-            text: 'Número de Reclamações por mês',
-            color: '#000000'
-        },
-        datalabels: {
-            color: 'black',
-            font: {
-              weight: 'bold'
-            }
-        },
-      },
-      layout: {
-        padding: 5,
-      }
+    layout: {
+      padding: 5,
     }
-  });
+  }
+};
+
+const ctx = new Chart(document.getElementById('myChart'),config);
+
+const data2 = {
+  labels: labels2,
+  datasets: [{
+    label: 'Reclamações',
+    data: values2,
+    borderWidth: 0.5,
+    borderColor: '#4c37eb',
+    backgroundColor: '#99a1f5',
+  }]
+};
+
+const config2 = {
+  type: 'bar',
+  data: data2,
+  options: {     responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+          display: false
+      },            
+      title: {
+          display: true,
+          text: 'Número de Reclamações por mês',
+          color: '#000000'
+      },
+      datalabels: {
+          color: 'black',
+          font: {
+            weight: 'bold'
+          }
+      },
+    },
+    layout: {
+      padding: 5,
+    }
+  }
+};
+
+const ctx2 = new Chart(document.getElementById('myChart2'), config2);
+
+
+// Chart.defaults.color = '#000';
+
+//   new Chart(ctx2, {
+//     type: 'bar',
+//     data: {
+//       labels: labels2,
+//       datasets: [{
+//         label: 'Reclamações',
+//         data: values2,
+//         borderWidth: 0
+//       }]
+//     },
+//     options: {
+//       responsive: true,
+//       maintainAspectRatio: false,
+//       plugins: {
+//         legend: {
+//             display: false
+//         },            
+//         title: {
+//             display: true,
+//             text: 'Número de Reclamações por mês',
+//             color: '#000000'
+//         },
+//         datalabels: {
+//             color: 'black',
+//             font: {
+//               weight: 'bold'
+//             }
+//         },
+//       },
+//       layout: {
+//         padding: 5,
+//       }
+//     }
+//   });
 
   // Slide Show Claim
 
@@ -514,3 +595,54 @@ $(".GoFor").click(function (e) {
   }
 
 })
+
+
+function random_rgba() {
+  var o = Math.round, r = Math.random, s = 255;
+  return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
+}
+
+$(".updateChart.Up").click(function (e) { 
+  e.preventDefault();
+  updateCharts();
+});
+
+
+function updateCharts(){
+  chart1();
+  $.ajax({
+    type: "POST",
+    url: "https://192.168.0.190/testes/lnc/Ajax/AttChart.php",
+    data: "data",
+    dataType: "json",    
+    beforeSend: function () {
+      $(".Icon.Update.Chart").remove();
+      $(".updateChart").removeClass('Up');
+      $(".updateChart").addClass('Loading');
+      $(".updateChart").append(`<div class="spinner-border text-secondary" role="status" style="width: 24px; height: 24px;"><span class="visually-hidden">Loading...</span></div>`);
+    },
+    success: function (response) {
+      dataAno = response.yearly;
+      dataMes = response.monthly;
+
+      labels1 = dataMes.names;
+      values1 = dataMes.values;
+      ctx.data.labels = labels1;
+      ctx.data.datasets[0].data = values1;
+      ctx.update();
+
+      labels2 = dataAno.names;
+      values2 = dataAno.values;
+      ctx2.data.labels = labels2;
+      ctx2.data.datasets[0].data = values2;
+      ctx2.update();
+
+      // attChart(ctx, dataMes.names, dataMes.values);
+
+      $(".updateChart").removeClass('Loading');
+      $(".updateChart").addClass('Up');
+      $(".spinner-border").remove();
+      $(".updateChart").append(`<img class="Icon Update Chart" src="./assets/rotate-right-solid.svg" alt="" srcset="">`);
+    }
+  });
+}

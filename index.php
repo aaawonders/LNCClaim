@@ -52,7 +52,11 @@ if (isset($_COOKIE['Theme'])){
     </div>
     <div class="Main">
         <div class="boxinfo charts">
-            <span class="Title">Gráficos</span>
+            <span class="Title">Gráficos 
+                <div class="updateChart Up">
+                    <img class="Icon Update Chart" src="./assets/rotate-right-solid.svg" alt="" srcset="">
+                </div>
+            </span>
             <hr>
             <div class="ChartSpace">
                 <canvas id="myChart"></canvas>

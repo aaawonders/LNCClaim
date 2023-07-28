@@ -30,8 +30,67 @@ while($row = mysqli_fetch_array($result)){
 foreach ($FornExist as $key => $forn){
     $sql = "SELECT COUNT(`LNC`) FROM `claims` WHERE MONTH(`Data de Abertura`) = $mesAtual AND `Forn` = '$forn'";
 
-    $Quant[$key] = mysqli_fetch_assoc(mysqli_query($conn, $sql))["COUNT(`LNC`)"];
+    $Quant[$key] = intval(mysqli_fetch_assoc(mysqli_query($conn, $sql))["COUNT(`LNC`)"]);
 }
+
+//Anual
+
+// $mesAtual = 1;
+
+
+if ($mesAtual == 1) {
+    $sql = "SELECT COUNT(`LNC`) FROM `claims` WHERE MONTH(`Data de Abertura`) = $mesAtual AND YEAR(`Data de Abertura`) = $AnoAtual";
+    
+    $names2 = array (mesExtenso($mesAtual));
+    $Quant2 = array(mysqli_fetch_assoc(mysqli_query($conn, $sql))["COUNT(`LNC`)"]);
+
+    foreach($Quant2 as $key => $value){
+        $Quant2[$key] = intval($value);
+    }
+}
+
+
+if ($mesAtual > 1) {
+    for ($i = 1; $i < $mesAtual +1; $i++){
+        $sql = "SELECT COUNT(`LNC`) FROM `claims` WHERE MONTH(`Data de Abertura`) = $i AND YEAR(`Data de Abertura`) = $AnoAtual";
+    
+        $names2[$i - 1] = mesExtenso($i);
+        $Quant2[$i - 1] = intval(mysqli_fetch_assoc(mysqli_query($conn, $sql))["COUNT(`LNC`)"]);
+    }
+}
+
+
+
+// var_dump ($Quant2);
+
+function mesExtenso($mes){
+    if ($mes == 1){
+        return "Jan";
+    } else if ($mes == 2){
+        return "Fev";
+    } else if ($mes == 3){
+        return "Mar";
+    } else if ($mes == 4){
+        return "Abr";
+    } else if ($mes == 5){
+        return "Mai";
+    } else if ($mes == 6){
+        return "Jun";
+    } else if ($mes == 7){
+        return "Jul";
+    } else if ($mes == 8){
+        return "Ago";
+    } else if ($mes == 9){
+        return "Set";
+    } else if ($mes == 10){
+        return "Out";
+    } else if ($mes == 11){
+        return "Nov";
+    } else if ($mes == 12){
+        return "Dez";
+    }
+}
+
 
 // echo "<pre>";
 // var_dump ($Quant);
@@ -64,12 +123,13 @@ $sql = "SELECT * FROM `claims` WHERE MONTH(`Data de Abertura`) = $mesAtual";
 // var_dump ($FornExist);
 
 $json = array(
+    'queryDate' => $DataCriacao,
     'monthly' => array(
         'names' => $FornExist,
         'values' => $Quant
     ),'yearly' => array(
         'names' => $names2,
-        'values' => $values2
+        'values' => $Quant2
     )
 );
 
