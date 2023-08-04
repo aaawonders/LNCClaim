@@ -144,17 +144,6 @@ for (var i = 0; i < files.length; i++){
 
 console.log(files);
 
-
-// $.ajax({
-//   type: "method",
-//   url: "url",
-//   data: "data",
-//   dataType: "dataType",
-//   success: function (response) {
-    
-//   }
-// });
-
 });
 
 var Forns = ['Ensinger', 'Igus', 'Deluma']
@@ -334,107 +323,213 @@ $("#ClearFiles").click(function (e) {
 
 
 
-var Claim = {}
+PopClaim (2);
 
-Claim.LNC = "001/23";
-Claim.Data = "01/01/2023"
+function PopClaim (LNC) { 
 
-Claim.Forn = "Ensinger Indústria de Plásticos Técnicos Ltda."
-Claim.FornCont = "Carlos Leandro L. da Rosa";
-Claim.FornTel = "(51) 3579-8834";
-Claim.FornEmail = "carlos@ensinger.com.br";
+$.ajax({
+  type: "get",
+  url: "https://192.168.0.190/testes/lnc/Ajax/getClaim.php",
+  data: `LNC=${LNC}`,
+  dataType: "json",
+  beforeSend: function () {
 
-Claim.Customer = "Nidec"
-Claim.CustCont = "André Silva";
-Claim.CustTel = "(19) 3936-8483";
-Claim.CustEmail = "andre.silva@nidec-gpm.com";
+  },
+  success: function (response) {
 
-Claim.Item = "C 001 017";
-Claim.ItemDesc = "Carcaça Plástica VW EA 211 (04E 121 1171L)";
+  var RawClaim = response;
 
-Claim.Desc = "Peças sem as buchas.";
-Claim.DescEsp = "Peças com as buchas inseridas";
-Claim.DescEnc = "Peças sem todas as buchas.";
+  
+  var Claim = {}
+  
+  Claim.LNC = RawClaim.LNC;
 
-Claim.Annex = 2;
+  Claim.Data = RawClaim.Data;
+  
+  Claim.Forn = RawClaim.Forn_Cont.Nome;
+  Claim.FornCont = RawClaim.Forn_Cont.Contato;
+  Claim.FornTel = RawClaim.Forn_Cont.Telefone;
+  Claim.FornEmail = RawClaim.Forn_Cont.Email;
+  
+  Claim.Customer = RawClaim.Nidec_Cont.Nome;
+  Claim.CustCont = RawClaim.Nidec_Cont.Contato;
+  Claim.CustTel = RawClaim.Nidec_Cont.Telefone;
+  Claim.CustEmail = RawClaim.Nidec_Cont.Email;
+  
+  Claim.Item = RawClaim.Item;
+  // Claim.ItemDesc = "Carcaça Plástica VW EA 211 (04E 121 1171L)";
+  
+  Claim.Desc = RawClaim.Descricao;
+  // Claim.DescEsp = "Peças com as buchas inseridas";
+  // Claim.DescEnc = "Peças sem todas as buchas.";
+  
+  Claim.Annex = RawClaim.Files.FileQuant;
+  Claim.File = []
 
+  if (Claim.Annex !== 0){
+    for (var i = 0; i < RawClaim.Files.File.length; i++){
+      Claim.File[i] = "https://intranet.nidec.local/testes/lnc/data" + RawClaim.Files.File[i]
+    }
 
-$('.Result').on('click', function (e) { 
-    e.preventDefault();
+  }
 
-    console.log('teste');
-    $('.PUp').addClass('active');
-    $('.blur').addClass('active');
-    $('.ClaimInfo').addClass('active');
+  
+  console.log(Claim);
+  
+  // $('.Result').on('click', function (e) { 
+  //     e.preventDefault();
+  
+  //     console.log('teste');
+  //     $('.PUp').addClass('active');
+  //     $('.blur').addClass('active');
+  //     $('.ClaimInfo').addClass('active');
+  
+  // })
+  
+  // $('#OKBtn').click(function (e) { 
+  //     e.preventDefault();
+      
+  //     $('.PUp').removeClass('active');
+  //     $('.blur').removeClass('active');
+  //     $('.ClaimInfo').removeClass('active');
+  
+  
+  //     $(".DataRes").html(Claim.Data);
+  //     $(".LNCRes").html(Claim.LNC);
+  
+  //     $(".FornName").html(Claim.Forn);
+  //     $(".FornCont").html(Claim.FornCont);
+  //     $(".FornTel").html(Claim.FornTel);
+  //     $(".linkEmailForn").html(Claim.FornEmail);
+  //     $(".linkEmailForn").attr('href', `mailto:${Claim.FornEmail}`);
+  
+  
+  //     $(".CustName").html(Claim.Customer);
+  //     $(".CustCont").html(Claim.CustCont);
+  //     $(".CustTel").html(Claim.CustTel);
+  //     $(".linkEmailCust").html(Claim.CustEmail);
+  //     $(".linkEmailCust").attr('href', `mailto:${Claim.CustEmail}`);
+  
+  //     $(".ItemRes").html(Claim.Item);
+  //     $(".ItemDescRes").html(Claim.ItemDesc);
+  
+  //     $(".DescRes").html(Claim.Desc);
+  //     $(".EncRes").html(Claim.DescEnc);
+  //     $(".EspRes").html(Claim.DescEsp);
+  
+  //     $(".ImgZone").html(Claim.Annex);
+  // });
+  
+  // $('.ImgZone').click(function (e) { 
+  //   e.preventDefault();
+  
+  //   $('.Imgs').addClass('active');
+  //   // $('.ClaimInfo').removeClass('active');
+  
+  // })
+  
+  // $('.btnclose').click(function (e) { 
+  //   e.preventDefault();
+  
+  //   $('.Imgs').removeClass('active');
+  
+  // })
+  },
+  error: function (response){
+    var RawClaim = response;
 
-})
-
-$('#OKBtn').click(function (e) { 
-    e.preventDefault();
-    
-    $('.PUp').removeClass('active');
-    $('.blur').removeClass('active');
-    $('.ClaimInfo').removeClass('active');
-
-
-    $(".DataRes").html(Claim.Data);
-    $(".LNCRes").html(Claim.LNC);
-
-    $(".FornName").html(Claim.Forn);
-    $(".FornCont").html(Claim.FornCont);
-    $(".FornTel").html(Claim.FornTel);
-    $(".linkEmailForn").html(Claim.FornEmail);
-    $(".linkEmailForn").attr('href', `mailto:${Claim.FornEmail}`);
-
-
-    $(".CustName").html(Claim.Customer);
-    $(".CustCont").html(Claim.CustCont);
-    $(".CustTel").html(Claim.CustTel);
-    $(".linkEmailCust").html(Claim.CustEmail);
-    $(".linkEmailCust").attr('href', `mailto:${Claim.CustEmail}`);
-
-    $(".ItemRes").html(Claim.Item);
-    $(".ItemDescRes").html(Claim.ItemDesc);
-
-    $(".DescRes").html(Claim.Desc);
-    $(".EncRes").html(Claim.DescEnc);
-    $(".EspRes").html(Claim.DescEsp);
-
-    $(".ImgZone").html(Claim.Annex);
+    console.log(RawClaim);
+  }
 });
 
-$('.ImgZone').click(function (e) { 
-  e.preventDefault();
-
-  $('.Imgs').addClass('active');
-  // $('.ClaimInfo').removeClass('active');
-
-})
-
-$('.btnclose').click(function (e) { 
-  e.preventDefault();
-
-  $('.Imgs').removeClass('active');
-
-})
-
-// Gráficos
-
-// var labels1 = ['Ensinger', 'Deluma'];
-// var labels2 = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'];
-// var values1 = [2, 7];
-// var values2 = [2, 10, 2, 4, 7, 9];
-
-// var labels1 = [];
-// var labels2 = [];
-// var values1 = [];
-// var values2 = [];
-
-// const ctx = document.getElementById('myChart');
-
-function chart1(){
 }
 
+var Claim = {}
+  
+  Claim.LNC = "001/23";
+  Claim.Data = "01/01/2023"
+  
+  Claim.Forn = "Ensinger Indústria de Plásticos Técnicos Ltda."
+  Claim.FornCont = "Carlos Leandro L. da Rosa";
+  Claim.FornTel = "(51) 3579-8834";
+  Claim.FornEmail = "carlos@ensinger.com.br";
+  
+  Claim.Customer = "Nidec"
+  Claim.CustCont = "André Silva";
+  Claim.CustTel = "(19) 3936-8483";
+  Claim.CustEmail = "andre.silva@nidec-gpm.com";
+  
+  Claim.Item = "C 001 017";
+  Claim.ItemDesc = "Carcaça Plástica VW EA 211 (04E 121 1171L)";
+  
+  Claim.Desc = "Peças sem as buchas.";
+  Claim.DescEsp = "Peças com as buchas inseridas";
+  Claim.DescEnc = "Peças sem todas as buchas.";
+  
+  Claim.Annex = 2;
+  
+  
+  $('.Result').on('click', function (e) { 
+      e.preventDefault();
+  
+      console.log('teste');
+      $('.PUp').addClass('active');
+      $('.blur').addClass('active');
+      $('.ClaimInfo').addClass('active');
+  
+  })
+  
+  $('#OKBtn').click(function (e) { 
+      e.preventDefault();
+      
+      $('.PUp').removeClass('active');
+      $('.blur').removeClass('active');
+      $('.ClaimInfo').removeClass('active');
+  
+  
+      $(".DataRes").html(Claim.Data);
+      $(".LNCRes").html(Claim.LNC);
+  
+      $(".FornName").html(Claim.Forn);
+      $(".FornCont").html(Claim.FornCont);
+      $(".FornTel").html(Claim.FornTel);
+      $(".linkEmailForn").html(Claim.FornEmail);
+      $(".linkEmailForn").attr('href', `mailto:${Claim.FornEmail}`);
+  
+  
+      $(".CustName").html(Claim.Customer);
+      $(".CustCont").html(Claim.CustCont);
+      $(".CustTel").html(Claim.CustTel);
+      $(".linkEmailCust").html(Claim.CustEmail);
+      $(".linkEmailCust").attr('href', `mailto:${Claim.CustEmail}`);
+  
+      $(".ItemRes").html(Claim.Item);
+      $(".ItemDescRes").html(Claim.ItemDesc);
+  
+      $(".DescRes").html(Claim.Desc);
+      $(".EncRes").html(Claim.DescEnc);
+      $(".EspRes").html(Claim.DescEsp);
+  
+      $(".ImgZone").html(Claim.Annex);
+  });
+  
+  $('.ImgZone').click(function (e) { 
+    e.preventDefault();
+  
+    $('.Imgs').addClass('active');
+    // $('.ClaimInfo').removeClass('active');
+  
+  })
+  
+  $('.btnclose').click(function (e) { 
+    e.preventDefault();
+  
+    $('.Imgs').removeClass('active');
+  
+  })
+
+
+// Gráficos
 const data = {
   labels: labels1,
   datasets: [{
@@ -510,46 +605,6 @@ const config2 = {
 
 const ctx2 = new Chart(document.getElementById('myChart2'), config2);
 
-
-// Chart.defaults.color = '#000';
-
-//   new Chart(ctx2, {
-//     type: 'bar',
-//     data: {
-//       labels: labels2,
-//       datasets: [{
-//         label: 'Reclamações',
-//         data: values2,
-//         borderWidth: 0
-//       }]
-//     },
-//     options: {
-//       responsive: true,
-//       maintainAspectRatio: false,
-//       plugins: {
-//         legend: {
-//             display: false
-//         },            
-//         title: {
-//             display: true,
-//             text: 'Número de Reclamações por mês',
-//             color: '#000000'
-//         },
-//         datalabels: {
-//             color: 'black',
-//             font: {
-//               weight: 'bold'
-//             }
-//         },
-//       },
-//       layout: {
-//         padding: 5,
-//       }
-//     }
-//   });
-
-  // Slide Show Claim
-
 var actualSlide = 1;
 
 
@@ -609,40 +664,50 @@ $(".updateChart.Up").click(function (e) {
 
 
 function updateCharts(){
-  chart1();
-  $.ajax({
-    type: "POST",
-    url: "https://192.168.0.190/testes/lnc/Ajax/AttChart.php",
-    data: "data",
-    dataType: "json",    
-    beforeSend: function () {
-      $(".Icon.Update.Chart").remove();
-      $(".updateChart").removeClass('Up');
-      $(".updateChart").addClass('Loading');
-      $(".updateChart").append(`<div class="spinner-border text-secondary" role="status" style="width: 24px; height: 24px;"><span class="visually-hidden">Loading...</span></div>`);
-    },
-    success: function (response) {
-      dataAno = response.yearly;
-      dataMes = response.monthly;
 
-      labels1 = dataMes.names;
-      values1 = dataMes.values;
-      ctx.data.labels = labels1;
-      ctx.data.datasets[0].data = values1;
-      ctx.update();
-
-      labels2 = dataAno.names;
-      values2 = dataAno.values;
-      ctx2.data.labels = labels2;
-      ctx2.data.datasets[0].data = values2;
-      ctx2.update();
-
-      // attChart(ctx, dataMes.names, dataMes.values);
-
-      $(".updateChart").removeClass('Loading');
-      $(".updateChart").addClass('Up');
-      $(".spinner-border").remove();
-      $(".updateChart").append(`<img class="Icon Update Chart" src="./assets/rotate-right-solid.svg" alt="" srcset="">`);
-    }
-  });
+  if (!$(".updateChart").hasClass('Loading')){
+    $.ajax({
+      type: "POST",
+      url: "https://192.168.0.190/testes/lnc/Ajax/AttChart.php",
+      data: "data",
+      dataType: "json",    
+      beforeSend: function () {
+        $(".Icon.Update.Chart").remove();
+        $(".updateChart").removeClass('Up');
+        $(".updateChart").addClass('Loading');
+        $(".updateChart").append(`<div class="spinner-border chart text-secondary" role="status" style="width: 24px; height: 24px;"><span class="visually-hidden">Loading...</span></div>`);
+      },
+      success: function (response) {
+        dataAno = response.yearly;
+        dataMes = response.monthly;
+  
+        labels1 = dataMes.names;
+        values1 = dataMes.values;
+        ctx.data.labels = labels1;
+        ctx.data.datasets[0].data = values1;
+        ctx.update();
+  
+        labels2 = dataAno.names;
+        values2 = dataAno.values;
+        ctx2.data.labels = labels2;
+        ctx2.data.datasets[0].data = values2;
+        ctx2.update();
+  
+        // attChart(ctx, dataMes.names, dataMes.values);
+  
+        $(".updateChart").removeClass('Loading');
+        $(".updateChart").addClass('Up');
+        $(".spinner-border.chart").remove();
+        $(".updateChart").append(`<img class="Icon Update Chart" src="./assets/rotate-right-solid.svg" alt="" srcset="">`);
+      }, error: function(response) {
+          console.error(response.responseText);
+          $(".updateChart").removeClass('Loading');
+          $(".updateChart").addClass('Up');
+          $(".spinner-border.chart").remove();
+          $(".updateChart").append(`<img class="Icon Update Chart" src="./assets/rotate-right-solid.svg" alt="" srcset="">`);
+      }
+    });
+  }
 }
+
+

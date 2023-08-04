@@ -7,7 +7,7 @@ require_once (realpath (__DIR__ .'./../src/sql/SQLIN.php'));
 
 if (isset($_GET['Table'])){
 
-    $sql = "SELECT * FROM claims";
+    $sql = "SELECT * FROM claims WHERE `Status` = 'Aberto'";
     
     $result = mysqli_query($conn, $sql) or die("Falha na execução da query: " . $mysqli->error);
     

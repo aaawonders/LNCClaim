@@ -4,4 +4,8 @@ RewriteEngine on
 # Inicio
 RewriteRule home ./index.php
 
-RewriteRule home ./table/table.php
+RewriteRule Abrir ./openClaim.php
+
+RewriteRule Apont ./table/table.php
+
+RewriteRule Imagem ./data

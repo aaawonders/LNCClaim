@@ -41,8 +41,6 @@ function SQLadd($CriarID, $CriarNome, $CriarSobrenome, $CriarEmail, $CriarSenha,
         setcookie('Nome',$CriarNome);
         setcookie('Sobrenome',$CriarSobrenome);
 
-        
-
         return true;
     } else {
         global $ErroLog;

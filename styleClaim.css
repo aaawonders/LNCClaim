@@ -1,0 +1,309 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+:root{
+    --white-space:rgb(241, 241, 241);
+    --black-space: rgb(30, 34, 39);
+
+    --white-font:rgb(34, 34, 34);
+    --black-font: rgb(223, 223, 223);
+
+    --second-back: rgb(38, 50, 65);
+    --second-back: rgb(221, 221, 221);
+
+    --highlight-back: rgb(35, 60, 90);;
+    --highlight-back: rgb(233, 233, 233);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: rgb(241, 241, 241);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Themes */
+
+.ThemeMode{
+    position: absolute;
+    left: 1300px;
+    top: 15px;
+    cursor: pointer;
+
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;    
+}
+
+.Icon.Sun{
+    display: none;
+    filter: invert(99%) sepia(53%) saturate(18%) hue-rotate(273deg) brightness(105%) contrast(96%);
+    transition: ease-in-out 0.2s;
+    width: 30px;
+}
+
+.Icon.Moon{
+    display: block;
+    filter: invert(23%) sepia(5%) saturate(276%) hue-rotate(181deg) brightness(93%) contrast(88%);
+    transition: ease-in-out 0.2s;
+    width: 27px;
+}
+
+.ThemeMode:hover .Sun{
+    width: 33px;
+    transition: ease-in-out 0.2s;
+}
+
+.ThemeMode:hover .Moon{
+    width: 30px;
+    transition: ease-in-out 0.2s;
+}
+
+/*  */
+
+.OpenClaim{
+    display: none;
+}
+
+.ClaimInfo{
+    display: none;
+}
+
+.OpenClaim.active{
+    background-color: var(--second-back);
+    z-index: 2;
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 80px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ClaimInfo.active{
+    background-color: var(--second-back);
+    z-index: 2;
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 50px;
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.boxbreak{
+    display: flex;
+    width: 100%;
+}
+
+.form-OClaim{
+    width: 100%;
+    margin: 2px 20px;
+    background-color: rgb(139, 187, 226);
+    border-radius: 15px;
+    padding: 15px 20px 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.form-OClaim .Title-Style{
+    font-size: 18px;
+    font-weight: bold;
+    color: rgb(4, 26, 51);
+}
+
+.Area1{
+    width: 70%;
+}
+
+.Area2{
+    width: 20%;
+}
+
+.Area3{
+    width: 100%;
+}
+
+.InputForm{
+    padding: 5px;
+    font-size: 15px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.InputForm.OK{
+    border-width: 2px;
+    border-color: rgb(13, 194, 73);
+    border-style: solid;
+}
+
+.InputForm.NOK{
+    border-width: 2px;
+    border-color: rgb(194, 40, 13);
+    color: rgb(168, 25, 0);
+    border-style: solid;
+}
+
+#FormtoClaim{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.FormClaim{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.divSpace{
+    width: 100%;
+    display: inline-block;
+}
+
+
+#LNCNum{
+    width: 100%;
+    margin: 5px;
+    color: red;
+    font-weight: bold;
+}
+
+.FornAct{
+    width: 100%;
+    margin: 5px;
+    display: inline-block;
+    position: relative;
+}
+
+#Forn{
+    width: 100%;
+}
+
+#CodItem{
+    width: 15%;
+    margin: 5px;
+}
+
+#Item{
+    width: 79%;
+    margin: 5px;
+}
+
+.DescSpace{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#Desc{
+    width: 80%;
+    resize: none;
+}
+
+#FileImg{
+    display: none;
+}
+
+.FileImgLabel{
+    background-color: rgb(202, 73, 13);
+    color: white;
+    padding: 6px 10px;
+    margin: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    align-self: center;
+    text-align: center;
+}
+
+.FileImgLabel::before{
+    content: '';
+    -webkit-mask-image: url(/assets/arrow-up-from-bracket-solid.svg);
+    mask-image: url(/assets/arrow-up-from-bracket-solid.svg);
+    width: 20px;
+    height: 20px;
+}
+
+#ClearFiles{
+    background-color: rgb(202, 13, 13);
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    margin: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    align-self: center;
+    display: none;
+}
+
+#Resp{
+    width: 100%;
+}
+
+.FileSpace{
+    width: 40%;
+    display: flex;
+    justify-content: space-around;
+    margin: 15px;
+}
+
+/* Abrir Reclamação */
+
+
+/* Reclamação */
+
+.sugSpace{
+    display: none;
+}
+
+.sugSpace.active{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--highlight-back);
+    width: 100%;
+    top: 35px;
+    left: 0px;
+}
+
+.SugBox{
+    padding: 12px 10px;
+    border-bottom: solid 1px #000000;
+    cursor: pointer;
+    transition: ease-in-out 0.2s;
+}
+
+.SugBox:hover{
+    text-decoration: 1px underline #000000;
+    background-color: var(--second-back);
+    transition: ease-in-out 0.2s;
+}
+
+.SugBox:active{
+    background-color: var(--second-back);
+    transition: ease-in-out 0.2s;
+    filter: brightness(80%);
+}

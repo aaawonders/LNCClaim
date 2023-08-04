@@ -21,7 +21,7 @@ if (isset($_COOKIE['Theme'])){
     }
 }
 
-
+require_once (realpath (__DIR__ .'./src/startPage.php'));
 
 ?>
 
@@ -30,7 +30,7 @@ if (isset($_COOKIE['Theme'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reclamações</title>
+    <title><?php echo "(".$QuantClaims.") "; ?>Reclamações</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css">
 </head>
@@ -48,6 +48,11 @@ if (isset($_COOKIE['Theme'])){
 
         <div class="search">
             <input type="text" placeholder="Pesquisar..." class="form-control" name="SearchBar" id="Search">
+            <div class="sugSearch">
+                <span class="sug item1" onclick="SearchClaim()"></span>
+                <span class="sug item2" onclick="SearchClaim()"></span>
+                <span class="sug item3" onclick="SearchClaim()"></span>
+            </div>
         </div>
     </div>
     <div class="Main">
@@ -64,18 +69,13 @@ if (isset($_COOKIE['Theme'])){
             </div>
         </div>
         <div class="boxinfo list">
-            <span class="Title">Lista de Reclamações</span>
+            <span class="Title">Lista de Reclamações Abertas</span>
             <hr>
             <div class="TableClaim">
                 <div class="Row HeadRow">
                     <div class="RowCell HeadCell">LNC</div>
                     <div class="RowCell HeadCell">Fornecedor</div>
                     <div class="RowCell HeadCell">Data</div>
-                </div>
-                <div class="Row Result S1">
-                    <div class="RowCell CellText CellLNC">001/23</div>
-                    <div class="RowCell CellText CellForn">Ensinger</div>
-                    <div class="RowCell CellText CellData">01/01/2023</div>
                 </div>
             </div>
             <div class="UpdateIn">
@@ -87,30 +87,52 @@ if (isset($_COOKIE['Theme'])){
         <div class="blur"></div>
         <div class="OpenClaim">
             <h5>Nova Reclamação</h5>
-            <hr class="hrClaim">
+            <!-- <hr class="hrClaim"> -->
             <form id="FormtoClaim" action="" method="post" enctype="multipart/form-data">
             <div class="FormClaim">
-                    <div class="LNCSpace divSpace">
+                <div class="boxbreak">                    
+                    <div class="Area1 form-OClaim">
+                    <span class="Title-Style">Informações do Fornecedor</span>
                         <div class="FornAct">
                             <input placeholder="Fornecedor" class="InputForm" name="Forn" id="Forn">
                             <div class="sugSpace active"></div>
                         </div>
-                        <input placeholder="LNC" class="InputForm" name="LNC" id="LNCNum">
                     </div>
-                    <div class="ItemSpace divSpace">
-                        <input placeholder="Item" class="InputForm" name="Item" id="CodItem">
-                        <input placeholder="Descrição do Item" class="InputForm" name="DescItem" id="Item">
+                    <div class="Area2 form-OClaim">
+                    <span class="Title-Style">Número da LNC</span>
+                        <div class="LNCSpace divSpace">
+                            <input placeholder="LNC" class="InputForm" name="LNC" id="LNCNum">
+                        </div>
                     </div>
-                    <div class="DescSpace divSpace">
-                        <textarea placeholder="Descrição" class="InputForm" name="Desc" id="Desc" cols="30" rows="10"></textarea>
+                </div>
+                    <div class="Area3 form-OClaim">
+                        <span class="Title-Style">Informações do Item</span>
+                        <div class="ItemSpace divSpace">
+                            <input placeholder="Item" class="InputForm" name="Item" id="CodItem">
+                            <input placeholder="Descrição do Item" class="InputForm" name="DescItem" id="Item">
+                        </div>
                     </div>
-                    <div class="FileSpace divSpace">
-                        <input multiple class="InputForm FileImg" accept="image/png, image/gif, image/jpeg" type="file" name="FileImg[]" id="FileImg">
-                        <label for="FileImg" class="FileImgLabel">Adicionar imagens</label>
-                        <button id="ClearFiles">X</button>
+                    <div class="Area4 form-OClaim">
+                    <span class="Title-Style">Descrição da Falha</span>
+                        <div class="DescSpace divSpace">
+                            <textarea placeholder="Descrição" class="InputForm" name="Desc" id="Desc" cols="30" rows="10"></textarea>
+                        </div>
                     </div>
-                    <div class="RespSpace divSpace">
-                        <input placeholder="Responsável" class="InputForm" name="Resp" id="Resp">
+                    <div class="boxbreak">  
+                        <div class="Area5 form-OClaim">
+                            <span class="Title-Style">Fotos da peça</span>
+                            <div class="FileSpace divSpace">
+                                <input multiple class="InputForm FileImg" accept="image/png, image/gif, image/jpeg" type="file" name="FileImg[]" id="FileImg">
+                                <label for="FileImg" class="FileImgLabel">Adicionar imagens</label>
+                                <button id="ClearFiles">X</button>
+                            </div>
+                        </div>
+                        <div class="Area6 form-OClaim">
+                        <span class="Title-Style">Responsável pela reclamação</span>
+                            <div class="RespSpace divSpace">
+                                <input placeholder="Responsável" class="InputForm" name="Resp" id="Resp">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <hr>
@@ -118,12 +140,11 @@ if (isset($_COOKIE['Theme'])){
                     <button id="CancelBtn" class="btn btn-danger">Cancelar</button>
                     <label for=""></label>
                     <input class="btn btn-success" id=" " type="submit" value="Criar">
-                    <!-- <button  >Criar</button> -->
                 </div>
             </form>
         </div>
         <div class="ClaimInfo">
-            <div class="InfoZone">
+            <div class="InfoZone active">
                 <div class="LNCZone">
                     <span class="DataClaim">Data: <span class="DataRes"></span></span>
                     <span class="LNCClaim">LNC: <span class="LNCRes"></span></span>
@@ -206,9 +227,23 @@ if (isset($_COOKIE['Theme'])){
                     </div>
                 </div>
             </div>
+            <div class="loading">
+                <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
             <div class="btnsub">
                 <button id="OKBtn" class="btn btn-success">OK</button>
             </div>
+        </div>
+    </div>
+
+    <div class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+                <div class="toast-body">
+                Hello, world! This is a toast message.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
     </div>
 

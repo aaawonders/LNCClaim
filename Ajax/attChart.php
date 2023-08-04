@@ -23,15 +23,24 @@ $result = mysqli_query($conn, $sql) or die("Falha na execução da query: " . $m
 
 $QuantPass = $result->num_rows;
 
+$FornExist = [];
+$Quant = [];
+
 while($row = mysqli_fetch_array($result)){
     $FornExist[] = $row['Forn'];
 }
 
-foreach ($FornExist as $key => $forn){
-    $sql = "SELECT COUNT(`LNC`) FROM `claims` WHERE MONTH(`Data de Abertura`) = $mesAtual AND `Forn` = '$forn'";
-
-    $Quant[$key] = intval(mysqli_fetch_assoc(mysqli_query($conn, $sql))["COUNT(`LNC`)"]);
+if (!$FornExist) {
+    $FornExist[0] = 0;
+    $Quant[0] = 0;
+} else {
+    foreach ($FornExist as $key => $forn){
+        $sql = "SELECT COUNT(`LNC`) FROM `claims` WHERE MONTH(`Data de Abertura`) = $mesAtual AND `Forn` = '$forn'";
+    
+        $Quant[$key] = intval(mysqli_fetch_assoc(mysqli_query($conn, $sql))["COUNT(`LNC`)"]);
+    }
 }
+
 
 //Anual
 
