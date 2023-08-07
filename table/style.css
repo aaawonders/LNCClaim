@@ -19,6 +19,17 @@
     --Tooltip--Main: rgb(17, 92, 55);
 }
 
+::-moz-selection { /* Code for Firefox */
+    color: rgb(255, 255, 255);
+    background: rgb(23, 185, 104);
+}
+  
+  ::selection {
+    color: rgb(255, 255, 255);
+    background: rgb(23, 185, 104);
+}
+
+
 *{
     margin: 0;
     padding: 0;
@@ -35,21 +46,209 @@ body {
 }
 
 .Header{
-    padding: 25px 15px;
-    margin-bottom: 30px;
+    position: relative;
+    display: flex;
+    padding: 12px 15px;
+    /* margin-bottom: 15px; */
     background-color: rgb(12, 167, 76);
     width: 100%;
+}
+
+.Link{
+    width: 2.5rem;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.Link .Icon{
+    width: 30px;
+    height: 30px;
+    filter: invert(100%) sepia(13%) saturate(7482%) hue-rotate(185deg) brightness(117%) contrast(102%);
+    transition: 0.1s ease-in-out;
+}
+
+.Link .Icon:hover{
+    transform: scale(1.2);
+    transition: 0.2s ease-in-out;
+}
+
+.Link:active{
+    background-color: #ffffff28;
+    transition: 0.1s ease-in-out;
+}
+
+.Link .Icon:active{
+    transform: scale(0.8);
+    transition: 0.2s ease-in-out;
+}
+
+.head-Title{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    vertical-align:middle;
+    color: white;
+    font-size: 22px;
+}
+
+.notifications{
+    position: relative;
+    width: 2.5rem;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.notifications .not-icon .Bell{
+    width: 30px;
+    height: 30px;
+    filter: invert(100%) sepia(13%) saturate(7482%) hue-rotate(185deg) brightness(117%) contrast(102%);
+    transition: 0.1s ease-in-out;
+}
+
+.notifications .not-icon{
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.not-icon:hover{
+    transform: scale(1.1);
+    transition: 0.2s ease-in-out;
+}
+
+.not-icon:active{
+    transform: scale(0.95);
+    transition: 0.2s ease-in-out;
+}
+
+.not-icon::before{
+    content: '';
+    background-color: rgb(190, 30, 30);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    position: absolute;
+    padding: 7px;
+    width: 2px;
+    height: 2px;
+    z-index: 1;
+}
+
+.not-icon::after{
+    content: '5';
+    font-size: 8px;
+    color: white;
+    position: absolute;
+    z-index: 2;
+    left: 11px;
+    top: 8px;
+}
+
+.not-icon:hover::after{
+    left: 6px;
+    top: 3px;
+}
+
+.not-list{
+    position: absolute;
+    background-color: white;
+    color: black;
+    padding: 15px 0;
+    width: 250px;
+    height: 320px;
+    left: -208px;
+    top: 50px;
+    border-radius: 15px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    display: none;
+    transform: translateY(-5%);
+    transition: 0.2s ease-in-out;
+    z-index: 5;
+}
+
+.not-list.active{
+    display: block;
+    transform: translateY(0%);
+    transition: 0.2s ease-in-out;
+}
+
+.not-list .list-title{
+    font-size: 15px;
+    padding: 0px 8px;
+    color: #616161;
+    margin-bottom: 2px;
+}
+
+.not{
+    background-color: white;
+    position: relative;
+    font-size: 12px;
+    padding: 2px 5px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    border-bottom: 1px solid rgb(226, 226, 226);
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none; 
+}
+
+.not:hover{
+    filter: brightness(90%);
+    transition: 0.2s ease-in-out;
+}
+
+.not .not-title{
+    color: red;
+    font-weight: bold;
+}
+
+.not .not-details{
+    padding: 5px 0px;
+    font-size: 10px;
+    display: flex;
+}
+
+.not .icon-detail{
+    border: solid 2px #39836d;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    margin-right: 7px;
+}
+
+.not .not-details .detail-text{
+    word-wrap: break-word;
+    color: rgb(99, 99, 99);
+}
+
+.not .tools{
+    display: flex;
+    font-size: 13px;
+    position: absolute;
+    z-index: 1;
+    color: rgb(153, 153, 153);
+    font-weight: bold;
+    left: 85%;
+    top: 0;
+}
+
+.not .tools span{
+    padding: 2px;
+    margin: 0 1px;
 }
 
 .InfoSpace{
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 20px;
+    padding: 20px 15px;
 }
 
 .Title{
-    padding: 15px;
     margin-bottom: 20px;
     font-size: 40px;
     color: rgb(78, 78, 78);
@@ -97,6 +296,55 @@ body {
     border-radius: 15px;
     border: none;
     width: 70%;
+}
+
+.Years{
+    width: 100%;
+    /* padding: 15px 0px; */
+}
+
+.Year-Area{
+    /* padding: 15px; */
+    height: 100%;
+    width: 100%;
+    list-style: none;
+    display: flex;
+    margin: 0;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+}
+
+.Year-Area .Year.Previous{
+    font-size: 22px;
+    padding: 4px;
+}
+
+.Year-Area .Year{
+    padding: 8px 15px;
+    cursor: pointer;
+    color: rgb(155, 146, 179);
+}
+
+.Year-Area .Year:hover{
+    background-color: rgb(202, 196, 218);
+    color: rgb(96, 86, 124);
+    font-size: 17px;
+    padding: 6px 14px;
+    transition: 0.2s ease-in-out;
+}
+
+.Year-Area .Year:active{
+    background-color: rgb(167, 158, 190);
+    color: rgb(121, 111, 146);
+    font-size: 17px;
+    padding: 6px 14px;
+    transition: 0.2s ease-in-out;
+}
+
+.Year-Area .Year.active{
+    background-color: rgb(44, 25, 97);
+    color: white;
+    font-weight: bold;
+    border-bottom: rgb(111, 77, 206) 3px solid;
 }
 
 .TableClaim{
@@ -220,7 +468,11 @@ body {
     filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
 }
 
-
+.Pags{
+    padding: 15px;
+    display: flex;
+    justify-content: space-around;
+}
 
 
 /* Página na reclamação inteira */
@@ -232,4 +484,262 @@ body {
 
 .ClaimTitle #LNCSpace{
     color: red;
+}
+
+.InfoSpace{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.Actions{
+    background-color: rgb(228, 228, 228);
+    width: 100%;
+    padding: 15px 5px;
+}
+
+.Type-edition{
+    /* position: absolute; */
+    top: 5px;
+    left: 90%;
+    padding: 5px;
+}
+
+.Type-edition span{
+    cursor: pointer;
+}
+
+.Type-edition span.active{
+    background-color: rgb(31, 157, 173);
+    color: white;
+    padding: 5px;
+    border-radius: 20px;
+}
+
+.info-box{
+    background-color: #f7d9d2;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    margin: 15px 10px;
+}
+
+.info-area{
+    width: 50%;
+}
+
+.Info-Title{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.item-area{
+    padding: 5px;
+}
+
+.Status-lnc{
+    position: relative;
+}
+
+.Status-area{
+    position: relative;
+    height: 70px;
+}
+
+.Status-list{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    width: 18%;
+    flex-direction: column;
+    padding: 5px 2px;
+    bottom: 0;
+    /* background-color: white; */
+}
+
+.Status-value{
+    text-align: center;
+    width: 90%;
+    padding: 15px;
+    cursor: pointer;
+    display: none;
+}
+
+.Status-value.active{
+    display: block;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+}
+
+#Eficacia.active{
+    background-color: rgb(23, 137, 202);
+    color: white;
+}
+
+#Aberto.active{
+    background-color: rgb(247, 230, 84);
+}
+
+#Fechado.active{
+    background-color: rgb(84, 247, 147);
+}
+
+
+.Table-Quant{
+    display: table;
+    width: 100%;
+    margin: 15px 0px;
+}
+
+.Table-Quant .row{
+    display: table-row;
+    padding: 5px;
+}
+
+.Table-Quant .row .cell{
+    display: table-cell;
+    padding: 5px;
+    /* border: 1px solid #000; */
+    border-collapse: separate;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.486);
+}
+
+
+.Table-Quant .head .cell{
+    background-color: rgb(12, 45, 138);
+    border: 1px solid rgb(12, 45, 138);
+    color: white;
+}
+
+
+.imgs{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 40%;
+    height: 90%;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none; 
+}
+
+.imgs .photos{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 15px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.imgs .photos img{
+    display: none;
+}
+
+.imgs .photos img.active{
+    display: block;
+    max-width: 500px;
+    max-height: 300px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+}
+
+.arrow{
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.507);
+    color: rgb(0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    /* padding: 15px; */
+    font-size: 30px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: space-around;
+    cursor: pointer;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    transition: 0.1s ease-in-out;
+}
+
+.arrow:hover{
+    transform: scale(1.1);
+    font-size: 35px;
+    transition: 0.2s ease-in-out;
+}
+
+.arrow:active{
+    background-color: rgba(255, 255, 255, 0.301);
+    transform: scale(0.9);
+    font-size: 28px;
+    transition: 0.1s ease-in-out;
+}
+
+.arrow.back-foto{
+    left: 0%;
+}
+
+.arrow.back-foto:hover{
+    transform: translateX(-2px);
+    transition: 0.2s ease-in-out;
+}
+
+.arrow.foward-foto{
+    left: 92%;
+}
+
+.arrow.foward-foto:hover{
+    transform: translateX(2px);
+    transition: 0.2s ease-in-out;
+}
+
+.pags{
+    display: flex;
+    position: absolute;
+    padding: 5px;
+    top: 5px;
+    left: 0px;
+    width: 100%;
+}
+
+.pags .pag{
+    margin: 5px;
+    width: 12px;
+    height: 12px;
+    background-color: rgba(32, 32, 32, 0.205);
+    border: 2px solid rgba(22, 22, 22, 0.562);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.pags .pag.active{
+    background-color: rgb(32, 32, 32);
+    border: none;
+}
+
+.value{
+    display: flex;
+}
+
+.value .buttons button{
+    border: none;
+    /* padding: 5px; */
+    margin: 0px 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: white;
+}
+
+.value .buttons button.button-Save{
+    background-color: #39836d;
+}
+
+.value .buttons button.button-Forget{
+    background-color: #ac1919;
 }

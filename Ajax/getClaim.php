@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET'){
             ),
             'Files' => array(
                 'FileQuant' => $FilesQuant,
-                'File' => $FilesExist[0]
+                'File' => $Files
             )
         );
                 

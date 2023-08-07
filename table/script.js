@@ -1,3 +1,7 @@
+
+
+var webAjax = "192.168.15.14";
+
 $(document).ready(function () {
 
     
@@ -6,7 +10,13 @@ $(document).ready(function () {
     CompleteReclam();
     var claim = getClaims();
 
-    console.log(claim);
+    window.onkeydown = function(event) {
+        if ( event.keyCode == 27 ) {
+          if ($('.not-list').hasClass('active')){      
+            $('.not-list').removeClass('active');
+          }
+        }
+      };
   });
 
 
@@ -262,3 +272,113 @@ $('#SearchInput').on('keyup',function () {
   
     
   });
+
+  $(".not-icon").click(function (e) { 
+    e.preventDefault();
+
+    var notStatus = $(".not-list").hasClass('active');
+
+    if (!notStatus){
+        $(".not-list").addClass('active');
+    } else if (notStatus){
+        $(".not-list").removeClass('active');
+    }
+    
+  });
+
+var actualSlide = 1;
+
+$('.foward-foto').click(function (e) { 
+    e.preventDefault();
+    
+    function goFoward(){
+
+        var filhos = $(".photos").children().length;
+        var images = document.querySelectorAll('.img');
+
+        $(".TotalPages").html(images.length);
+
+        if (actualSlide < filhos) {
+          images[actualSlide - 1].classList.remove("active");
+          actualSlide++;
+          $(".pag").removeClass('active');
+          $(`.pag.p${actualSlide}`).addClass('active');
+          images[actualSlide - 1].classList.add("active");
+        } else if (actualSlide = filhos) {
+          images[actualSlide - 1].classList.remove("active");
+          actualSlide = 1;
+          $(".pag").removeClass('active');
+          $(`.pag.p${actualSlide}`).addClass('active');
+          images[actualSlide - 1].classList.add("active");
+        }
+    }
+
+    goFoward();
+});
+
+$('.back-foto').click(function (e) { 
+    e.preventDefault();
+    
+    function goBack(){
+        var filhos = $(".photos").children().length;
+        var images = document.querySelectorAll('.img');
+      
+        $(".TotalPages").html(images.length);
+        if (actualSlide > 1) {
+          images[actualSlide - 1].classList.remove("active");
+          actualSlide--;
+          $(".pag").removeClass('active');
+          $(`.pag.p${actualSlide}`).addClass('active');
+          images[actualSlide - 1].classList.add("active");
+          $(".ActualPage").html(actualSlide);
+        } else if (actualSlide = 1) {
+          images[actualSlide - 1].classList.remove("active");
+          actualSlide = images.length;
+          $(".pag").removeClass('active');
+          $(`.pag.p${actualSlide}`).addClass('active');
+          $(".ActualPage").html(actualSlide);
+          images[actualSlide - 1].classList.add("active");
+        }
+    }
+
+    goBack();
+});
+
+function PagGo(pag){
+
+    var images = document.querySelectorAll('.img');
+
+    $(".img").removeClass('active');
+    images[pag - 1].classList.add("active");
+
+    $(".pag").removeClass('active');
+    $(`.pag.p${pag}`).addClass('active');
+}
+
+// $('.value').click(function (e) { 
+//     e.preventDefault();
+    
+//     if (!$(this).hasClass('Editing')){
+
+//         $(this).addClass('Editing')
+//         var oldValue = $(this).html();
+//         var origin = e.target.classList[0]
+    
+//         $(this).html(`<input type="text" name="" id="value-this" value="${oldValue}"> <div class="buttons"><button class="button-Save" onclick="saveThis('${origin}')">OK</button><button class="button-Forget" onclick="closeThis('${origin}', '${oldValue}')">X</button></div>`);
+//     }
+
+// });
+
+function saveThis(classe){
+    var newText = $("#value-this").val();
+
+    $(`.${classe}`).removeClass('Editing');
+    $(`.${classe}`).html(newText);
+}
+
+function closeThis(classe, oldValue){
+    // console.log(classe);
+    
+    $(`.${classe}`).removeClass('Editing');
+    // $(`.${classe}`).html(oldValue);
+}

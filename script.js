@@ -1,8 +1,31 @@
+
+var webAjax = "192.168.15.14"
+
 $(document).ready(function () {  
   attTableClaim();
   attTableBy();
   
   updateCharts();
+
+  window.onkeydown = function( event ) {
+    if ( event.keyCode == 27 ) {
+      if ($('.PUp').hasClass('active')){      
+        $('.PUp').removeClass('active');
+        $('.blur').removeClass('active');
+        $('.ClaimInfo').removeClass('active');
+
+        $('.ImgZone').off();
+        $('#OKBtn').off();
+        $('.blur').off();
+        $('.btnclose').off();
+    
+        if ($('.Imgs').hasClass('active')){
+          $('.Imgs').removeClass('active');
+          $('.imgShow').html('');
+        }
+      }
+    }
+  };
 });
 
 var labels1 = [];
@@ -10,10 +33,14 @@ var labels2 = [];
 var values1 = [];
 var values2 = [];
 
+setInterval(() => {
+  attTableBy();
+}, 840000);
+
 function attTableBy(){
   $.ajax({
     type: "GET",
-    url: "https://192.168.0.190/testes/lnc/Ajax/AttTable.php",
+    url: `https://${webAjax}/testes/lnc/Ajax/AttTable.php`,
     data: "AttTableBy=true",
     dataType: "html",
     beforeSend: function () {
@@ -22,7 +49,6 @@ function attTableBy(){
     },
     success: function (response) {
 
-      console.log(response);
       $(".UpdateIn span").html(response);
     },
     error: function (response) {
@@ -35,7 +61,7 @@ function attTableBy(){
 function attTableClaim(){
   $.ajax({
     type: "GET",
-    url: "https://192.168.0.190/testes/lnc/Ajax/AttTable.php",
+    url: `https://${webAjax}/testes/lnc/Ajax/AttTable.php`,
     data: "Table=true",
     dataType: "html",
     beforeSend: function () {
@@ -56,7 +82,6 @@ function attTableClaim(){
       $('.Result').on('click', function (e) { 
         e.preventDefault();
     
-        console.log('teste');
         $('.PUp').addClass('active');
         $('.blur').addClass('active');
         $('.ClaimInfo').addClass('active');
@@ -92,7 +117,7 @@ $('#FormtoClaim').submit(function (e) {
 
   $.ajax({
     type: "POST",
-    url: "https://192.168.0.190/testes/lnc/Ajax/formGO.php",
+    url: `https://${webAjax}/testes/lnc/Ajax/formGO.php`,
     data: form,
     processData: false,
     contentType: false,
@@ -108,6 +133,8 @@ $('#FormtoClaim').submit(function (e) {
       attTableClaim();
     },
     error: function (response) {
+
+        console.log(response.responseText);
         alertarClaim('hrClaim', response.responseText);
     }
   });
@@ -244,6 +271,14 @@ function DataHoje() {
     return data.getYear();
 }
 
+function ThemeGet (){
+  var cookies = document.cookie
+
+  cookies = cookies.split('; ');
+
+  
+}
+
 function ThemeChange(Type, click){
 
   if (Type === "Sun") {
@@ -321,24 +356,24 @@ $("#ClearFiles").click(function (e) {
     $("#ClearFiles").css("display", "none");
 });
 
-
-
-PopClaim (2);
-
 function PopClaim (LNC) { 
 
 $.ajax({
   type: "get",
-  url: "https://192.168.0.190/testes/lnc/Ajax/getClaim.php",
+  url: `https://${webAjax}/testes/lnc/Ajax/getClaim.php`,
   data: `LNC=${LNC}`,
   dataType: "json",
   beforeSend: function () {
 
+    $('.PUp').addClass('active');
+    $('.blur').addClass('active');
+    $('.ClaimInfo').addClass('active');
+
+    $('.loading.claim').addClass('active');
   },
   success: function (response) {
 
   var RawClaim = response;
-
   
   var Claim = {}
   
@@ -363,161 +398,89 @@ $.ajax({
   // Claim.DescEsp = "Peças com as buchas inseridas";
   // Claim.DescEnc = "Peças sem todas as buchas.";
   
-  Claim.Annex = RawClaim.Files.FileQuant;
+  Claim.Annex = Number(RawClaim.Files.FileQuant);
+
   Claim.File = []
 
-  if (Claim.Annex !== 0){
+  if (Claim.File !== 0){
     for (var i = 0; i < RawClaim.Files.File.length; i++){
-      Claim.File[i] = "https://intranet.nidec.local/testes/lnc/data" + RawClaim.Files.File[i]
+      Claim.File[i] = `https://${webAjax}/testes/lnc/data` + RawClaim.Files.File[i]
     }
 
   }
 
-  
-  console.log(Claim);
-  
-  // $('.Result').on('click', function (e) { 
-  //     e.preventDefault();
-  
-  //     console.log('teste');
-  //     $('.PUp').addClass('active');
-  //     $('.blur').addClass('active');
-  //     $('.ClaimInfo').addClass('active');
-  
-  // })
-  
-  // $('#OKBtn').click(function (e) { 
-  //     e.preventDefault();
-      
-  //     $('.PUp').removeClass('active');
-  //     $('.blur').removeClass('active');
-  //     $('.ClaimInfo').removeClass('active');
-  
-  
-  //     $(".DataRes").html(Claim.Data);
-  //     $(".LNCRes").html(Claim.LNC);
-  
-  //     $(".FornName").html(Claim.Forn);
-  //     $(".FornCont").html(Claim.FornCont);
-  //     $(".FornTel").html(Claim.FornTel);
-  //     $(".linkEmailForn").html(Claim.FornEmail);
-  //     $(".linkEmailForn").attr('href', `mailto:${Claim.FornEmail}`);
-  
-  
-  //     $(".CustName").html(Claim.Customer);
-  //     $(".CustCont").html(Claim.CustCont);
-  //     $(".CustTel").html(Claim.CustTel);
-  //     $(".linkEmailCust").html(Claim.CustEmail);
-  //     $(".linkEmailCust").attr('href', `mailto:${Claim.CustEmail}`);
-  
-  //     $(".ItemRes").html(Claim.Item);
-  //     $(".ItemDescRes").html(Claim.ItemDesc);
-  
-  //     $(".DescRes").html(Claim.Desc);
-  //     $(".EncRes").html(Claim.DescEnc);
-  //     $(".EspRes").html(Claim.DescEsp);
-  
-  //     $(".ImgZone").html(Claim.Annex);
-  // });
-  
-  // $('.ImgZone').click(function (e) { 
-  //   e.preventDefault();
-  
-  //   $('.Imgs').addClass('active');
-  //   // $('.ClaimInfo').removeClass('active');
-  
-  // })
-  
-  // $('.btnclose').click(function (e) { 
-  //   e.preventDefault();
-  
-  //   $('.Imgs').removeClass('active');
-  
-  // })
-  },
-  error: function (response){
-    var RawClaim = response;
+  $(".DataRes").html(Claim.Data);
+  $(".LNCRes").html(Claim.LNC);
 
-    console.log(RawClaim);
+  $(".FornName").html(Claim.Forn);
+  $(".FornCont").html(Claim.FornCont);
+  $(".FornTel").html(Claim.FornTel);
+  $(".linkEmailForn").html(Claim.FornEmail);
+  $(".linkEmailForn").attr('href', `mailto:${Claim.FornEmail}`);
+
+
+  $(".CustName").html(Claim.Customer);
+  $(".CustCont").html(Claim.CustCont);
+  $(".CustTel").html(Claim.CustTel);
+  $(".linkEmailCust").html(Claim.CustEmail);
+  $(".linkEmailCust").attr('href', `mailto:${Claim.CustEmail}`);
+
+  $(".ItemRes").html(Claim.Item);
+  $(".ItemDescRes").html(Claim.ItemDesc);
+
+  $(".DescRes").html(Claim.Desc);
+  $(".EncRes").html(Claim.DescEnc);
+  $(".EspRes").html(Claim.DescEsp);
+
+  $(".ImgZone").html(Claim.Annex);
+  
+  function closeAll(){
+    $('.PUp').removeClass('active');
+    $('.blur').removeClass('active');
+    $('.ClaimInfo').removeClass('active');
+
+    $('.ImgZone').off();
+    $('#OKBtn').off();
+    $('.blur').off();
+    $('.btnclose').off();
+
+    if ($('.Imgs').hasClass('active')){
+      $('.Imgs').removeClass('active');
+      $('.imgShow').html('');
+    }
   }
-});
-
-}
-
-var Claim = {}
-  
-  Claim.LNC = "001/23";
-  Claim.Data = "01/01/2023"
-  
-  Claim.Forn = "Ensinger Indústria de Plásticos Técnicos Ltda."
-  Claim.FornCont = "Carlos Leandro L. da Rosa";
-  Claim.FornTel = "(51) 3579-8834";
-  Claim.FornEmail = "carlos@ensinger.com.br";
-  
-  Claim.Customer = "Nidec"
-  Claim.CustCont = "André Silva";
-  Claim.CustTel = "(19) 3936-8483";
-  Claim.CustEmail = "andre.silva@nidec-gpm.com";
-  
-  Claim.Item = "C 001 017";
-  Claim.ItemDesc = "Carcaça Plástica VW EA 211 (04E 121 1171L)";
-  
-  Claim.Desc = "Peças sem as buchas.";
-  Claim.DescEsp = "Peças com as buchas inseridas";
-  Claim.DescEnc = "Peças sem todas as buchas.";
-  
-  Claim.Annex = 2;
-  
-  
-  $('.Result').on('click', function (e) { 
-      e.preventDefault();
-  
-      console.log('teste');
-      $('.PUp').addClass('active');
-      $('.blur').addClass('active');
-      $('.ClaimInfo').addClass('active');
-  
-  })
   
   $('#OKBtn').click(function (e) { 
       e.preventDefault();
-      
-      $('.PUp').removeClass('active');
-      $('.blur').removeClass('active');
-      $('.ClaimInfo').removeClass('active');
-  
-  
-      $(".DataRes").html(Claim.Data);
-      $(".LNCRes").html(Claim.LNC);
-  
-      $(".FornName").html(Claim.Forn);
-      $(".FornCont").html(Claim.FornCont);
-      $(".FornTel").html(Claim.FornTel);
-      $(".linkEmailForn").html(Claim.FornEmail);
-      $(".linkEmailForn").attr('href', `mailto:${Claim.FornEmail}`);
-  
-  
-      $(".CustName").html(Claim.Customer);
-      $(".CustCont").html(Claim.CustCont);
-      $(".CustTel").html(Claim.CustTel);
-      $(".linkEmailCust").html(Claim.CustEmail);
-      $(".linkEmailCust").attr('href', `mailto:${Claim.CustEmail}`);
-  
-      $(".ItemRes").html(Claim.Item);
-      $(".ItemDescRes").html(Claim.ItemDesc);
-  
-      $(".DescRes").html(Claim.Desc);
-      $(".EncRes").html(Claim.DescEnc);
-      $(".EspRes").html(Claim.DescEsp);
-  
-      $(".ImgZone").html(Claim.Annex);
+      closeAll()
   });
-  
+
+  $('.blur').click(function (e) { 
+    e.preventDefault();
+    closeAll()
+});
+
+  function addImg(imgs){
+    for (var i = 0; i < imgs.length; i++){
+      $('.imgShow').append(`<img class="imge i${i}" src="${imgs[i]}" alt="">`);
+    }
+
+    $('.imge.i0').addClass('active');
+    $('.TotalPages').html(imgs.length);
+    $('.ActualPage').html('1');
+  }
+
+
+
   $('.ImgZone').click(function (e) { 
     e.preventDefault();
-  
-    $('.Imgs').addClass('active');
-    // $('.ClaimInfo').removeClass('active');
+
+    if (Claim.Annex !== 0){
+      addImg(Claim.File)
+      
+      $('.Imgs').addClass('active');
+      // $('.ClaimInfo').removeClass('active');
+    }
   
   })
   
@@ -527,6 +490,108 @@ var Claim = {}
     $('.Imgs').removeClass('active');
   
   })
+
+  $('.loading.claim').removeClass('active');
+  $('.InfoZone').addClass('active');
+
+  },
+  error: function (response){
+    var RawClaim = response;
+
+    console.log(RawClaim);
+  }
+});
+}
+
+// $('.Result').on('click', function (e) { 
+//   // e.preventDefault();
+
+//   PopClaim (2);
+// })
+
+// var Claim = {}
+  
+//   Claim.LNC = "001/23";
+//   Claim.Data = "01/01/2023"
+  
+//   Claim.Forn = "Ensinger Indústria de Plásticos Técnicos Ltda."
+//   Claim.FornCont = "Carlos Leandro L. da Rosa";
+//   Claim.FornTel = "(51) 3579-8834";
+//   Claim.FornEmail = "carlos@ensinger.com.br";
+  
+//   Claim.Customer = "Nidec"
+//   Claim.CustCont = "André Silva";
+//   Claim.CustTel = "(19) 3936-8483";
+//   Claim.CustEmail = "andre.silva@nidec-gpm.com";
+  
+//   Claim.Item = "C 001 017";
+//   Claim.ItemDesc = "Carcaça Plástica VW EA 211 (04E 121 1171L)";
+  
+//   Claim.Desc = "Peças sem as buchas.";
+//   Claim.DescEsp = "Peças com as buchas inseridas";
+//   Claim.DescEnc = "Peças sem todas as buchas.";
+  
+//   Claim.Annex = 2;
+  
+  
+//   $('.Result').on('click', function (e) { 
+//       e.preventDefault();
+  
+//       console.log('teste');
+//       $('.PUp').addClass('active');
+//       $('.blur').addClass('active');
+//       $('.ClaimInfo').addClass('active');
+  
+//   })
+  
+//   $('#OKBtn').click(function (e) { 
+//       e.preventDefault();
+      
+//       $('.PUp').removeClass('active');
+//       $('.blur').removeClass('active');
+//       $('.ClaimInfo').removeClass('active');
+  
+  
+//       $(".DataRes").html(Claim.Data);
+//       $(".LNCRes").html(Claim.LNC);
+  
+//       $(".FornName").html(Claim.Forn);
+//       $(".FornCont").html(Claim.FornCont);
+//       $(".FornTel").html(Claim.FornTel);
+//       $(".linkEmailForn").html(Claim.FornEmail);
+//       $(".linkEmailForn").attr('href', `mailto:${Claim.FornEmail}`);
+  
+  
+//       $(".CustName").html(Claim.Customer);
+//       $(".CustCont").html(Claim.CustCont);
+//       $(".CustTel").html(Claim.CustTel);
+//       $(".linkEmailCust").html(Claim.CustEmail);
+//       $(".linkEmailCust").attr('href', `mailto:${Claim.CustEmail}`);
+  
+//       $(".ItemRes").html(Claim.Item);
+//       $(".ItemDescRes").html(Claim.ItemDesc);
+  
+//       $(".DescRes").html(Claim.Desc);
+//       $(".EncRes").html(Claim.DescEnc);
+//       $(".EspRes").html(Claim.DescEsp);
+  
+//       $(".ImgZone").html(Claim.Annex);
+//   });
+  
+//   $('.ImgZone').click(function (e) { 
+//     e.preventDefault();
+  
+//     $('.Imgs').addClass('active');
+//     // $('.ClaimInfo').removeClass('active');
+  
+//   })
+  
+//   $('.btnclose').click(function (e) { 
+//     e.preventDefault();
+  
+//     $('.Imgs').removeClass('active');
+  
+//   })
 
 
 // Gráficos
@@ -668,7 +733,7 @@ function updateCharts(){
   if (!$(".updateChart").hasClass('Loading')){
     $.ajax({
       type: "POST",
-      url: "https://192.168.0.190/testes/lnc/Ajax/AttChart.php",
+      url: `https://${webAjax}/testes/lnc/Ajax/AttChart.php`,
       data: "data",
       dataType: "json",    
       beforeSend: function () {

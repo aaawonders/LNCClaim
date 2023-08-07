@@ -14,6 +14,7 @@
     --highlight-back: rgb(233, 233, 233);
 }
 
+
 *{
     margin: 0;
     padding: 0;
@@ -90,6 +91,11 @@ body {
 
 .buttons button {
     margin: 5px;
+}
+
+#ClaimGo a{
+    text-decoration: none;
+    color: white;
 }
 
 /* Abrir Reclamação */
@@ -604,17 +610,28 @@ body {
     position: absolute;
     display: none;
     flex-direction: column;
-    background-color: orange;
+    background-color: rgb(230, 204, 156);
     padding: 40px;
+    min-width: 50%;
+    min-height: 70%;
+    border-radius: 15px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
 }
 
 .Imgs.active{
     display: flex;
 }
 
+.imgShow{
+    display: flex;
+    justify-content: space-around;
+}
+
 .imgShow .imge{
-    width: 600px;
+    max-width: 600px;
+    max-height: 400px;
     display: none;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
 }
 
 .imgShow .imge.active{
@@ -685,4 +702,39 @@ body {
     background-color: var(--second-back);
     transition: ease-in-out 0.2s;
     filter: brightness(80%);
+}
+
+
+/* Media Queries */
+
+
+@media (max-width: 1000px) {
+    body{
+        
+    }
+
+    .Main{
+        flex-direction: column;
+    }
+
+    .buttons{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .boxinfo{
+        width: 60%;
+    }
+
+    .PUp{
+
+    }
+
+    .OpenClaim.active{
+        width: 80%;
+    }
+
+    .boxbreak{
+        flex-direction: column;
+    }
 }

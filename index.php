@@ -1,25 +1,6 @@
 <?php
 
 
-if (!isset($_COOKIE['Theme'])){
-    setcookie("Theme", "Day", time() + (10 * 365 * 24 * 60 * 60));
-}
-
-if (isset($_COOKIE['ThemeSession'])){
-    if ($_COOKIE['ThemeSession'] == 'Moon'){
-        $_COOKIE['Theme'] = 'Moon';
-    } else if ($_COOKIE['ThemeSession'] == 'Sun'){
-        $_COOKIE['Theme'] = 'Sun';
-    }
-}
-
-if (isset($_COOKIE['Theme'])){
-    if ($_COOKIE['Theme'] == 'Moon'){
-        echo "<script>ThemeChange('Moon', false);</script>";
-    } else if ($_COOKIE['Theme'] == 'Sun'){
-        echo "<script>ThemeChange('Sun', false);</script>";
-    }
-}
 
 require_once (realpath (__DIR__ .'./src/startPage.php'));
 
@@ -43,7 +24,7 @@ require_once (realpath (__DIR__ .'./src/startPage.php'));
     <div id="Actions">
         <div class="buttons">
             <button id="OpenButton" class="btn btn-danger">Abrir Reclamação</button>
-            <button class="btn btn-success">Lista de Reclamações</button>
+            <button id="ClaimGo" class="btn btn-success"><a href="./table/table.html">Lista de Reclamações</a></button>
         </div>
 
         <div class="search">
@@ -144,7 +125,7 @@ require_once (realpath (__DIR__ .'./src/startPage.php'));
             </form>
         </div>
         <div class="ClaimInfo">
-            <div class="InfoZone active">
+            <div class="InfoZone">
                 <div class="LNCZone">
                     <span class="DataClaim">Data: <span class="DataRes"></span></span>
                     <span class="LNCClaim">LNC: <span class="LNCRes"></span></span>
@@ -213,9 +194,9 @@ require_once (realpath (__DIR__ .'./src/startPage.php'));
                 <div class="ImgZone"></div>
                 <div class="Imgs">
                     <div class="imgShow">
-                        <img class="imge i1 active" src="https://images.unsplash.com/photo-1468581264429-2548ef9eb732?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="">
+                        <!-- <img class="imge i1 active" src="https://images.unsplash.com/photo-1468581264429-2548ef9eb732?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="">
                         <img class="imge i2" src="https://images.unsplash.com/photo-1439405326854-014607f694d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2VhfGVufDB8fDB8fHww&auto=format&fit=crop&w=2800&q=60" alt="" srcset="">
-                        <img class="imge i3" src="https://plus.unsplash.com/premium_photo-1669227514211-1fb0614af821?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80" alt="" srcset="">
+                        <img class="imge i3" src="https://plus.unsplash.com/premium_photo-1669227514211-1fb0614af821?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80" alt="" srcset=""> -->
                     </div>
                     <button class="btnclose">X</button>
                     <button class="btnChange GoBack"><</button>
@@ -227,7 +208,7 @@ require_once (realpath (__DIR__ .'./src/startPage.php'));
                     </div>
                 </div>
             </div>
-            <div class="loading">
+            <div class="loading claim">
                 <div class="spinner-border text-success" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>

@@ -18,7 +18,7 @@ function SQLadd($CriarID, $CriarNome, $CriarSobrenome, $CriarEmail, $CriarSenha,
     
     $sql = "SELECT * FROM login WHERE Email = '$CriarEmail'";
 
-    $result = mysqli_query($conn, $sql) or die("Falha na execução da query: " . $mysqli->error);
+    $result = mysqli_query($conn, $sql) or die("Falha na execução da query: " . mysqli_error());
 
     $QuantPass = $result->num_rows;
 

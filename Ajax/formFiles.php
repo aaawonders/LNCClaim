@@ -14,7 +14,7 @@ header("Access-Control-Allow-Origin: *");
 
             date_default_timezone_set('America/Sao_Paulo');
 
-            return date('Y-m-d H_i_s');
+            return date('Y-m-d-H_i_s');
         }
 
         $QuantFiles = count($_FILES['FileImg']['name']);

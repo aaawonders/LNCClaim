@@ -6,6 +6,6 @@ RewriteRule home ./index.php
 
 RewriteRule Abrir ./openClaim.php
 
-RewriteRule Apont ./table/table.php
+RewriteRule Claims ./table/table.php
 
 RewriteRule Imagem ./data

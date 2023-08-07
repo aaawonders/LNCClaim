@@ -21,6 +21,8 @@ if (isset($_GET['Table'])){
     }
     
     for ($i = 0; $i < count($LNC); $i++) {
+
+        $LNCRaw[$i] = $LNC[$i];
     
         if ($LNC[$i] < 10) {
             $LNC[$i] = str_pad($LNC[$i], 3, '0', STR_PAD_LEFT);
@@ -37,12 +39,13 @@ if (isset($_GET['Table'])){
     }
     
     for ($i = 0; $i < count($LNC); $i++) {
-        echo "<div lnc='$LNC[$i]' class='Row Result S$i'>";
+        echo "<div lnc='$LNC[$i]' onclick='PopClaim($LNCRaw[$i])' class='Row Result S$i'>";
         echo "<div class='RowCell CellText CellLNC'>$LNC[$i]</div>";
         echo "<div class='RowCell CellText CellForn'>$Forn[$i]</div>";
         echo "<div class='RowCell CellText CellData'>$Data[$i]</div>";
         echo "</div>";
     }
+
 }
 
 if (isset($_GET['AttTableBy'])){
