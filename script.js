@@ -1,5 +1,5 @@
 
-var webAjax = "192.168.15.14"
+var webAjax = "intranet.nidec.local"
 
 $(document).ready(function () {  
   attTableClaim();
@@ -365,6 +365,27 @@ $.ajax({
   dataType: "json",
   beforeSend: function () {
 
+    function closeAll(){
+      $('.PUp').removeClass('active');
+      $('.blur').removeClass('active');
+      $('.ClaimInfo').removeClass('active');
+  
+      $('.ImgZone').off();
+      $('#OKBtn').off();
+      $('.blur').off();
+      $('.btnclose').off();
+  
+      if ($('.Imgs').hasClass('active')){
+        $('.Imgs').removeClass('active');
+        $('.imgShow').html('');
+      }
+    }
+    
+    $('#OKBtn').click(function (e) { 
+        e.preventDefault();
+        closeAll()
+    });
+
     $('.PUp').addClass('active');
     $('.blur').addClass('active');
     $('.ClaimInfo').addClass('active');
@@ -487,7 +508,10 @@ $.ajax({
   $('.btnclose').click(function (e) { 
     e.preventDefault();
   
-    $('.Imgs').removeClass('active');
+    if ($('.Imgs').hasClass('active')){
+      $('.Imgs').removeClass('active');
+      $('.imgShow').html('');
+    }
   
   })
 
@@ -776,3 +800,224 @@ function updateCharts(){
 }
 
 
+$("#loginForm").submit(function (e) { 
+  e.preventDefault();
+
+  var User = $("#UserIn").val();
+  var Senha = $("#SenhaIn").val();
+  var LembrarSenha = $("#LembrarIn").is(':checked');
+  var pass = true;
+
+  if ($(".ErrorInfo").length > 0){
+    RemoveError();
+  }
+
+  function RemoveError(){
+    $(".ErrorInfo").remove();
+    $(".Infield input").removeClass("Error");
+  }
+
+  function Error(message, field) {
+
+    var ErrorDiv = '<div class="ErrorInfo"><img class="" src="http://intranet.nidec.local/testes/lnc/assets/circle-info-solid.svg" alt="" srcset=""></div>';
+
+    $(field+ " input").addClass("Error");
+
+    $(field).append(ErrorDiv);
+    $(field + " .ErrorInfo").attr("data-content", message)
+  }
+
+  if (User == ""){
+    Error("Usuário Vazio", ".Username");
+    pass = false;
+  }
+
+  if (Senha == ""){
+    Error("Senha Vazio", ".Senha.Infield");
+    pass = false;
+  }
+
+  if (!pass){
+    return false;
+  }
+  
+  console.log('foi');
+  console.log(LembrarSenha);
+
+});
+
+$(".spass").click(function (e) { 
+  e.preventDefault();
+  
+  if ($(this).hasClass("show")){
+    $(this).removeClass("show");
+    $(this).addClass("hide");
+
+    $("#SenhaIn").attr("type", "text");
+
+    $(".spass .i1").removeClass("show");
+    $(".spass .i2").addClass("show");
+
+  } else if ($(this).hasClass("hide")){
+    $(this).removeClass("hide");
+    $(this).addClass("show");
+
+    $("#SenhaIn").attr("type", "password");
+
+    $(".spass .i2").removeClass("show");
+    $(".spass .i1").addClass("show");
+  }
+});
+
+$(".GoRegister").click(function (e) { 
+  e.preventDefault();
+  
+  $("#loginForm").removeClass("active");
+  $("#RegisterForm").addClass("active");
+});
+
+$(".GoLogin").click(function (e) { 
+  e.preventDefault();
+  
+  $("#RegisterForm").removeClass("active");
+  $("#loginForm").addClass("active");
+});
+
+
+
+
+$("#RegisterForm").submit(function (e) { 
+  e.preventDefault();
+
+  var Nome = $("#NomeIn").val();
+  var Sobrenome = $("#SobrenomeIn").val();
+  var User = $("#UserIn").val();
+  var Email = $("#EmailIn").val();
+  var pass = true;
+
+  if ($(".ErrorInfo").length > 0){
+    RemoveError();
+  }
+
+  function RemoveError(){
+    $(".ErrorInfo").remove();
+    $(".Infield input").removeClass("Error");
+  }
+
+  function Error(message, field) {
+
+    var ErrorDiv = '<div class="ErrorInfo"><img class="" src="http://intranet.nidec.local/testes/lnc/assets/circle-info-solid.svg" alt="" srcset=""></div>';
+
+    $(field+ " input").addClass("Error");
+
+    $(field).append(ErrorDiv);
+    $(field + " .ErrorInfo").attr("data-content", message)
+  }
+
+  if (Nome == ""){
+    Error("Digite seu nome", ".Nome.Infield");
+    pass = false;
+  }
+
+  if (Sobrenome == ""){
+    Error("Digite seu sobrenome", ".Sobrenome.Infield");
+    pass = false;
+  }
+
+  if (User == ""){
+    Error("Digite seu usuário", ".Username.Infield");
+    pass = false;
+  }
+
+  if (Email == ""){
+    Error("Digite seu Email", ".Email.Infield");
+    pass = false;
+  }
+
+  if (!pass){
+    return false;
+  }
+  
+  console.log('foi');
+  console.log(LembrarSenha);
+
+});
+
+$(".spass").click(function (e) { 
+  e.preventDefault();
+  
+  if ($(this).hasClass("show")){
+    $(this).removeClass("show");
+    $(this).addClass("hide");
+
+    $("#SenhaIn").attr("type", "text");
+
+    $(".spass .i1").removeClass("show");
+    $(".spass .i2").addClass("show");
+
+  } else if ($(this).hasClass("hide")){
+    $(this).removeClass("hide");
+    $(this).addClass("show");
+
+    $("#SenhaIn").attr("type", "password");
+
+    $(".spass .i2").removeClass("show");
+    $(".spass .i1").addClass("show");
+  }
+});
+
+$(".GoRegister").click(function (e) { 
+  e.preventDefault();
+  
+  $("#loginForm").removeClass("active");
+  $("#RegisterForm").addClass("active");
+});
+
+$(".GoLogin").click(function (e) { 
+  e.preventDefault();
+  
+  $("#RegisterForm").removeClass("active");
+  $("#loginForm").addClass("active");
+});
+
+
+
+
+
+
+
+function SuggestName(nome, sobrenome){
+
+  if (nome == "" || sobrenome == ""){
+    return ""
+  }
+
+  var newnome = nome.substr(0,1).toLowerCase();
+
+  var fullname = newnome + sobrenome.toLowerCase() + 123;
+
+  return fullname
+}
+
+$("#NomeIn").keyup(function (e) { 
+
+  var nome = $("#NomeIn").val();
+  var sobrenome = $("#SobrenomeIn").val();
+
+  var loginSuggest = SuggestName(nome, sobrenome);
+
+  console.log(loginSuggest);
+  $("#UserIn.inRegister").val(loginSuggest);
+    
+});
+
+$("#SobrenomeIn").keyup(function (e) { 
+  var nome = $("#NomeIn").val();
+  var sobrenome = $("#SobrenomeIn").val();
+
+  var loginSuggest = SuggestName(nome, sobrenome);
+
+  console.log(loginSuggest);
+  $("#UserIn.inRegister").val(loginSuggest);
+  
+});

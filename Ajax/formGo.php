@@ -34,8 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $DataCriacao = date('Y-m-d H:i:s',time());
             $DataAbertura = date('Y-m-d',time());
     
-            $sql = " INSERT INTO `claims` (`LNC`, `Ano`, `Data de Abertura`, `Forn`, `Item`, `Descricao`, `Resp`,`Data Criacao`) 
-            VALUES ('$LNCSeq', '$LNCAno', '$DataAbertura', '$Forn', '$Item','$Desc', '$Resp','$DataCriacao')";
+            $sql = " INSERT INTO `claims` (`LNC`, `Ano`, `Data de Abertura`, `Forn`, `Item`, `Descricao`,`Status`, `Resp`,`Data Criacao`) 
+            VALUES ('$LNCSeq', '$LNCAno', '$DataAbertura', '$Forn', '$Item','$Desc', 'Aberto', '$Resp','$DataCriacao')";
     
             mysqli_query($conn, $sql) or die("Falha na execução da query: " . $mysqli->error);  
             

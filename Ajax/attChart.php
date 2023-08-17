@@ -20,7 +20,6 @@ $AnoAtual = date("o", strtotime($DataCriacao));
 //Mês
 $sql = "SELECT DISTINCT `Forn` FROM `claims` WHERE MONTH(`Data de Abertura`) = $mesAtual"; ;
 $result = mysqli_query($conn, $sql) or die("Falha na execução da query: " . $mysqli->error);
-
 $QuantPass = $result->num_rows;
 
 $FornExist = [];

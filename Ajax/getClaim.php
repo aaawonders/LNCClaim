@@ -7,6 +7,43 @@ header('Content-Type: application/json; charset=utf-8');
 require_once (realpath (__DIR__ .'./../src/sql/SQLIN.php'));
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+
+    if (isset($_GET['GETLNC'])){
+
+        $sql = "SELECT MAX(`LNC`) from claims";
+    
+        $result = mysqli_query($conn, $sql) or die("Falha na execução da query: " . $mysqli->error);
+        
+        $QuantPass = $result->num_rows;
+
+        if ($QuantPass == 0) {
+            http_response_code(404);
+
+            $json = array('info' => "404: Reclamação não existe");
+
+            $result = json_encode($json);
+        
+            echo $result;
+            exit();
+        }
+
+        if ($QuantPass > 0){
+
+            while($row = mysqli_fetch_array($result)){
+                $LNC = $row['MAX(`LNC`)'];
+            }
+
+            $json = array('info' => "200", 'LNC' => $LNC);
+
+            $result = json_encode($json);
+        
+            http_response_code(200);
+            echo $result;
+        }
+    }
+
+
+
     if (isset($_GET['LNC'])){
 
         $LNC = $_GET['LNC'];

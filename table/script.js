@@ -1,5 +1,4 @@
 
-
 var webAjax = "192.168.15.14";
 
 $(document).ready(function () {

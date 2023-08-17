@@ -2,6 +2,8 @@
 
 
 
+
+
 require_once (realpath (__DIR__ .'./src/startPage.php'));
 
 ?>
@@ -98,6 +100,20 @@ require_once (realpath (__DIR__ .'./src/startPage.php'));
                         <div class="DescSpace divSpace">
                             <textarea placeholder="Descrição" class="InputForm" name="Desc" id="Desc" cols="30" rows="10"></textarea>
                         </div>
+                        <!-- <div class="EncEsppSpace divSpace">
+                                <input type="checkbox" name="ckVisual" id="ckVisual">
+                                <label for="ckVisual">Falha Visual</label>
+                        </div>
+                        <div class="EncEspSpace divSpace">
+                            <div class="EncSpace divSpace">
+                                <span class="label-EspEnc Enc">Encontrado: </span>
+                                <input type="text" name="Enc-input" id="Enc-input" class="InputForm">
+                            </div>
+                            <div class="EspSpace divSpace">
+                                <span class="label-EspEnc Esp">Especificado: </span>
+                                <input type="text" name="Esp-input" id="Esp-input" class="InputForm">
+                            </div>
+                        </div> -->
                     </div>
                     <div class="boxbreak">  
                         <div class="Area5 form-OClaim">
@@ -226,6 +242,67 @@ require_once (realpath (__DIR__ .'./src/startPage.php'));
                 </div>
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
+    </div>
+
+    <div class="PUp active">
+        <div class="blur active"></div>
+        <form id="loginForm" class="Loginform active" method="post">
+            <div class="Title">
+                <span>Fazer Login</span>
+            </div>
+            <div class="Username Infield field">
+                <label for="UserIn">Usuário</label>
+                <input class="inLogin User" type="text" name="UserIn" id="UserIn" required>
+            </div>
+            <div class="Senha Infield field">
+                <label for="SenhaIn">Senha</label>
+                <input class="inLogin Senha" type="password" name="UserIn" id="SenhaIn" required>
+                <div class="show spass">
+                    <img class="show i1" src="http://intranet.nidec.local/testes/lnc/assets/eye-solid.svg" alt="" srcset="">
+                    <img class="i2" src="http://intranet.nidec.local/testes/lnc/assets/eye-slash-solid.svg" alt="" srcset="">
+                </div>
+            </div>
+            <div class="LembrarSenha field">
+                <input type="checkbox" name="LembrarIn" id="LembrarIn">
+                <label for="LembrarIn">Lembrar Senha</label>
+            </div>
+            <div class="btn-go Passfield field">
+                <input type="submit" class=" btn btn-success" value="Entrar">
+            </div>
+            <div class="Plus field">
+                <span class="Goto"><a href="" class="GoRegister">Registrar</a></span>
+                <span class="Goto"><a href="" class="ForgetPass">Esqueci a senha</a></span>
+            </div>
+        </form>
+        <form id="RegisterForm" class="Loginform" method="post">
+            <div class="Title">
+                <span>Registrar</span>
+            </div>
+            <div class="Nomes Infield field">
+                <div class="Nome Infield field">
+                    <label for="NomeIn">Nome</label>
+                    <input class="inLogin inRegister Nome" type="text" name="NomeIn" id="NomeIn" required>
+                </div>
+                <div class="Sobrenome Infield field">
+                    <label for="SobrenomeIn">Sobrenome</label>
+                    <input class="inLogin inRegister Sobrenome" type="text" name="SobrenomeIn" id="SobrenomeIn" required>
+                </div>
+            </div>
+            <div class="Username Infield field">
+                <label for="UserIn">Escolha seu Usuário</label>
+                <input class="inLogin inRegister User" type="text" name="UserIn" id="UserIn" required>
+            </div>
+            <div class="Email Infield field">
+                <label for="UserIn">Digite seu Email</label>
+                <input class="inLogin inRegister Email" type="email" name="EmailIn" id="EmailIn" required>
+            </div>
+            <div class="btn-go Passfield field">
+                <input type="submit" class=" btn btn-success" value="Registrar">
+            </div>
+            <div class="Plus field">
+                <span class="Goto">Tem conta? <a href="" class="GoLogin">Fazer Login</a></span>
+            </div>
+        </form>
     </div>
 
 </body>

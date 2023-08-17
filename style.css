@@ -704,6 +704,197 @@ body {
     filter: brightness(80%);
 }
 
+/* Login */
+
+.Loginform{
+    display: none;
+    z-index: 5;
+    position: fixed;
+    background-color: white;
+    padding: 18px;
+    width: 370px;
+    border-radius: 15px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;   
+}
+
+.Loginform.active{
+    display: block;
+}
+
+#RegisterForm{
+    width: 540px;
+}
+
+.Loginform .Title{
+    font-size: 22px;
+    color: rgb(21, 88, 68);
+    font-weight: bold;
+}
+
+.Infield{
+    display: flex;
+    padding: 5px;
+    flex-direction: column;
+    font-size: 18px;
+}
+
+.Senha{
+    position: relative;
+}
+
+.Senha .spass{
+    position: absolute;
+    cursor: pointer;
+    top: 38px;
+    left: 88%;
+}
+
+.spass img{
+    display: none;
+}
+
+.spass img.show{
+    display: inline;
+    width: 25px;
+    height: 25px;
+    filter: invert(80%) sepia(0%) saturate(3942%) hue-rotate(156deg) brightness(109%) contrast(103%);
+    transition: ease-in-out 0.2s;
+}
+
+.spass:hover img.show{
+    filter: invert(84%) sepia(0%) saturate(3953%) hue-rotate(81deg) brightness(89%) contrast(90%);
+    transform: scale(1.1);
+    transition: ease-in-out 0.2s;
+}
+
+.Passfield{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.inLogin{
+    padding: 8px;
+    border-radius: 15px;
+    font-size: 15px;
+    border: 1px solid rgb(148, 148, 148) ;
+}
+
+.inLogin.Error{
+    border: 2px solid rgb(201, 45, 39);
+}
+
+.inLogin.Error::before{
+    content: "";
+    background-image: url("http://intranet.nidec.local/testes/lnc/assets/circle-info-solid.svg");
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    display: block;
+
+
+}
+
+.field{
+    position: relative;
+    width: 100%;
+    margin: 15px 2px;
+}
+
+.ErrorInfo{
+    position: absolute;
+    cursor: help;
+    top: 48%;
+    left: 88%;
+}
+
+.ErrorInfo img{
+    width: 30px;
+    height: 30px;
+    filter: invert(45%) sepia(24%) saturate(2765%) hue-rotate(323deg) brightness(112%) contrast(73%);
+}
+
+.ErrorInfo::before{
+    display: none;
+    content: "";
+    position: absolute;
+    border-style: solid;
+    border-width: 10px 8px 8px 8px;
+    border-color: #741a17 transparent transparent transparent;
+    top: -10%;
+    left: 20%;
+    transition: ease-in-out 0.2s;
+}
+
+.ErrorInfo::after{
+    display: none;
+    content: attr(data-content);
+    position: absolute;
+    background-color: #741a17;
+    color: white;
+    padding: 5px;
+    font-size: 11px;
+    width: 100px;
+    text-align: center;
+    top: -98%;
+    left: 20%;
+    transition: ease-in-out 0.2s;
+    transition-delay: 0.2s;
+}
+
+.ErrorInfo:hover::before{
+    display: block;
+    top: -40%;
+    transition: ease-in-out 0.2s;
+    transition-delay: 0.2s;
+}
+
+.ErrorInfo:hover::after{
+    display: block;
+    top: -128%;
+    transition: ease-in-out 0.2s;
+    transition-delay: 0.2s;
+}
+
+.LembrarSenha{
+    width: 100%;
+    display: flex;
+    padding-left: 28%;
+    font-size: 16px;
+}
+
+#LembrarIn{
+    margin-right: 15px;
+}
+
+.Plus{
+    display: flex;
+    justify-content: space-around;
+}
+
+.Goto a{
+    color: rgb(21, 88, 68);
+}
+
+
+.Nomes{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.Nomes .Infield{
+    margin: 0;
+}
 
 /* Media Queries */
 
