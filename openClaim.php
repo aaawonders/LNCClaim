@@ -139,9 +139,36 @@ require_once (realpath (__DIR__ .'./src/startPage.php'));
     </div>
 </div>
 
+<div class="PartsPop">
+<button cod="" class="btn-go-item" onclick="ChooseComp(this)"><img src="./assets/arrow-left-solid.svg" alt="" srcset=""></button>
+    <div class="search-area">
+        <input type="text" id="searchparts" placeholder="Pesquisar...">
+    </div>
+    <div class="Main-Parts">
+        <div class="ProdutsList">
+            <ul>
+                <li cod="VW 01 30" onclick="LoadProd(this)" class="Prod-choose Prod1 active">VW 01 30</li>
+                <li cod="VW 02 04" onclick="LoadProd(this)" class="Prod-choose Prod2">VW 02 04</li>
+                <li cod="VW 02 05" onclick="LoadProd(this)" class="Prod-choose Prod2">VW 02 05</li>
+            </ul>
+        </div>
+        <div class="ComponentsList">
+            <ul>
+                <li cod="C 100 010" onclick="LoadComp(this)" class="Comp-choose Comp1 active">C 100 010 <span class="dot-info-comp" onclick="LoadInfoComp('C 100 010')">...</span></li>
+                <li cod="C 018 003" onclick="LoadComp(this)" class="Comp-choose Comp2">C 018 003</li>
+                <li cod="C 002 015" onclick="LoadComp(this)" class="Comp-choose Comp3">C 002 015</li>
+                <li cod="C 003 014" onclick="LoadComp(this)" class="Comp-choose Comp4">C 003 014</li>
+                <li cod="C 005 009" onclick="LoadComp(this)" class="Comp-choose Comp5">C 005 009</li>
+                <li cod="C 004 005" onclick="LoadComp(this)" class="Comp-choose Comp6">C 004 005</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 </body>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="./scriptClaim.js"></script>
 </html>
+

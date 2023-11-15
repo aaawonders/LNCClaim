@@ -6,6 +6,7 @@ $(document).ready(function () {
   attTableBy();
   
   updateCharts();
+  hasLogin();
 
   window.onkeydown = function( event ) {
     if ( event.keyCode == 27 ) {
@@ -13,6 +14,7 @@ $(document).ready(function () {
         $('.PUp').removeClass('active');
         $('.blur').removeClass('active');
         $('.ClaimInfo').removeClass('active');
+        $('.Loginform').removeClass('active');
 
         $('.ImgZone').off();
         $('#OKBtn').off();
@@ -27,6 +29,31 @@ $(document).ready(function () {
     }
   };
 });
+
+
+
+function hasLogin(){
+  var loginVal = document.querySelector('meta[name="login"]').content;
+
+  if (loginVal == 'false'){
+    $('.PUp').addClass('active');
+    $('.blur').addClass('active');
+    $('#loginForm').addClass('active');
+  }
+
+}
+
+
+// $.ajax({
+//   type: "GET",
+//   url: `https://${webAjax}/testes/lnc/Ajax/teste.php`,
+//   data: "session=true",
+//   dataType: "html",
+//   success: function (response) {
+//     console.log(response);
+//   }
+// });
+
 
 var labels1 = [];
 var labels2 = [];
@@ -799,12 +826,30 @@ function updateCharts(){
   }
 }
 
+function Logoff(){
+
+  $.ajax({
+    type: "POST",
+    url: `https://${webAjax}/testes/lnc/Ajax/Logoff.php`,
+    data: {Logoff: true},
+    beforeSend: function () {
+
+    },
+    success: function (response) {
+      window.location.href = 'https://intranet.nidec.local/testes/lnc/home';
+    },
+    error: function (response) {
+
+    }
+  });
+}
+
 
 $("#loginForm").submit(function (e) { 
   e.preventDefault();
 
-  var User = $("#UserIn").val();
-  var Senha = $("#SenhaIn").val();
+  var User = $("#loginForm #UserIn").val();
+  var Senha = $("#loginForm #SenhaIn").val();
   var LembrarSenha = $("#LembrarIn").is(':checked');
   var pass = true;
 
@@ -843,6 +888,74 @@ $("#loginForm").submit(function (e) {
   
   console.log('foi');
   console.log(LembrarSenha);
+
+  $.ajax({
+    type: "POST",
+    url: `https://${webAjax}/testes/lnc/Ajax/Login.php`,
+    data: {UserIn: User, SenhaIn: Senha, Lembrar: LembrarSenha},
+    beforeSend: function () {
+      $('.alert-danger').remove();
+      $('#loginForm').removeClass("active");
+      $(".Loginform.add").addClass("active");
+      $(".Loginform.add").html('<span class="Wait">Loading...</span>')
+    },
+    success: function (response) {
+      console.log("Login: " + response);
+      window.location.href = 'https://intranet.nidec.local/testes/lnc/home';
+    },
+    error: function (response) {
+
+      var msg = response.responseText;
+      console.log(msg);
+
+      if (msg == "Aguardando Liberacao"){
+        $('.Loginform.add').html(`<div class="Waiting-Login Msg"><div class="Logo"><img class="" src="http://intranet.nidec.local/testes/lnc/assets/undraw_mindfulness.svg" alt="" srcset=""></div><div class="Title">
+        <p>Sua conta está sendo analisada</p></div><div class="text"><p>É necessário esperar a liberação de sua conta</p></div><button class="Close-pop btn btn-success">OK</button></div>`);
+
+        $(".Close-pop").click(function (e) { 
+          e.preventDefault();
+        
+          if ($('.PUp').hasClass('active')){    
+        
+            $('.PUp').removeClass('active');
+            $('.blur').removeClass('active');
+            $('.Loginform.add').removeClass('active');
+        
+          }
+          
+        });
+      }
+
+      if (msg == "Trocar Senha"){
+        $('.Loginform.add').html(`<div class="Password-change Msg"><div class="text">
+        <p>Usuário, favor altere a sua senha.</p></div><form class="input-Pass" method="post"><input type="hidden" name="ID" value=""><input class="inLogin SenhaNew" type="password" name="SenhaNew" id="SenhaNew" onchange="validate(this.value)" required></form><button class="Change-Senha btn btn-success">OK</button></div>`);
+
+        $('.Password-change').append('<div class="Password-Validation"><ul> <li class="val length">Sua Senha deve ter pelo menos 6 caracteres</li><li class="val num">Deve conter números</li><li class="val letra">Deve conter letras</li><li class="val esp">Deve conter um simbolo especial</li></ul></div>')
+
+        $(".Change-Senha").click(function (e) { 
+          e.preventDefault();
+          var Senha = $('.SenhaNew').val();
+
+          ChangePassword(User, Senha);
+          
+        });
+      }
+
+      if (msg == "Login incorreto"){
+        $('#loginForm').addClass("active");
+        $(".Loginform.add").removeClass("active");
+  
+        $('#loginForm').prepend(`<div class="alert alert-danger d-flex align-items-center"  role="alert">Dados Incorretos</div>`);
+      }
+
+      if (msg == "Senha Incorreta"){
+        $('#loginForm').addClass("active");
+        $(".Loginform.add").removeClass("active");
+  
+        $('#loginForm').prepend(`<div class="alert alert-danger d-flex align-items-center"  role="alert">${response.responseText}</div>`);
+      }
+    }
+  });
 
 });
 
@@ -889,10 +1002,11 @@ $(".GoLogin").click(function (e) {
 $("#RegisterForm").submit(function (e) { 
   e.preventDefault();
 
-  var Nome = $("#NomeIn").val();
-  var Sobrenome = $("#SobrenomeIn").val();
-  var User = $("#UserIn").val();
-  var Email = $("#EmailIn").val();
+  var form = new FormData(this);
+  var Nome = $("#RegisterForm #NomeIn").val();
+  var Sobrenome = $("#RegisterForm #SobrenomeIn").val();
+  var User = $("#RegisterForm #UserIn").val();
+  var Email = $("#RegisterForm #EmailIn").val();
   var pass = true;
 
   if ($(".ErrorInfo").length > 0){
@@ -937,9 +1051,35 @@ $("#RegisterForm").submit(function (e) {
   if (!pass){
     return false;
   }
-  
-  console.log('foi');
-  console.log(LembrarSenha);
+
+  var str = {NomeIn: Nome, SobrenomeIn: Sobrenome, UserIn: User, EmailIn: Email};
+
+  console.log(str)
+
+  $.ajax({
+    type: "POST",
+    url: `https://${webAjax}/testes/lnc/Ajax/Register.php`,
+    data: {NomeIn: Nome, SobrenomeIn: Sobrenome, UserIn: User, EmailIn: Email},
+    beforeSend: function () {
+      $('.alert-warning').remove();
+      $('#RegisterForm').removeClass("active");
+      $(".Loginform.add").addClass("active");
+      $(".Loginform.add").html('<span class="Wait">Loading...</span>')
+    },
+    success: function (response) {
+      console.log(response);
+      $(".Loginform.add").html('<div class="Complete-Login Msg"><div class="Logo"><img class="show i1" src="http://intranet.nidec.local/testes/lnc/assets/circle-check-regular.svg" alt="" srcset=""></div><div class="Title"><p>Conta criada com sucesso</p></div><div class="text"><p>É necessário aprovação da conta por parte do administrador.</p><p>Um email será enviado assim que você for aprovado.</p></div><button class="Close-pop btn btn-success">OK</button></div>');
+    },
+    error: function (response) {
+      console.log(response);
+      $('#RegisterForm').addClass("active");
+      $(".Loginform.add").removeClass("active");
+
+      $('#RegisterForm').prepend(`<div class="alert alert-warning d-flex align-items-center"  role="alert">${response.responseText}</div>`);
+
+    }
+  });
+
 
 });
 
@@ -1021,3 +1161,98 @@ $("#SobrenomeIn").keyup(function (e) {
   $("#UserIn.inRegister").val(loginSuggest);
   
 });
+
+$(".Close-pop").click(function (e) { 
+  e.preventDefault();
+
+  if ($('.PUp').hasClass('active')){    
+
+    $('.PUp').removeClass('active');
+    $('.blur').removeClass('active');
+    $('.Loginform.add').removeClass('active');
+
+  }
+  
+});
+
+function Validate(password) {
+    
+  var pass = false;
+  $('.Change-Senha').prop('disabled', true);
+
+  if (password == null){
+    $('.val').removeClass('right');
+    $('.val').removeClass('wrong');
+  }
+
+  if (password.length < 6){
+    $('.val.length').removeClass('right');
+    $('.val.length').addClass('wrong');
+    return false;
+  } else if  (password.length >= 6){
+    $('.val.length').addClass('right');
+    $('.val.length').removeClass('wrong');
+  } else if  (password.length == 0){
+    $('.val.length').removeClass('right');
+    $('.val.length').removeClass('wrong');
+    return false;
+  }
+
+  if (!password.match(/[a-z]/i)){
+    $('.val.letra').removeClass('right');
+    $('.val.letra').addClass('wrong');
+    return false;
+  } else {
+    $('.val.letra').addClass('right');
+    $('.val.letra').removeClass('wrong');
+  }
+
+
+  if (!password.match(/(\d+)/)){
+    $('.val.num').removeClass('right');
+    $('.val.num').addClass('wrong');
+    return false;
+  } else {
+    $('.val.num').addClass('right');
+    $('.val.num').removeClass('wrong');
+  }
+
+  if (!password.match(/\W+/)){
+    $('.val.esp').removeClass('right');
+    $('.val.esp').addClass('wrong');
+    return false;
+  } else {
+    $('.val.esp').addClass('right');
+    $('.val.esp').removeClass('wrong');
+  }
+
+  $('.Change-Senha').prop('disabled', false);
+  return true;
+}
+
+
+function ChangePassword(User, password){
+
+  var senha = password;
+  senha = senha.replace(/\s/g, '');
+
+  $.ajax({
+    type: "POST",
+    url: `https://${webAjax}/testes/lnc/Ajax/Register.php`,
+    data: {User: User, NewPassword: senha, FirstLogin: true},
+    beforeSend: function () {
+      $('.alert-warning').remove();
+      $('#RegisterForm').removeClass("active");
+      $(".Loginform.add").addClass("active");
+      $(".Loginform.add").html('<span class="Wait">Loading...</span>')
+    },
+    success: function (response) {
+      console.log(response);
+
+      $(".Loginform.add").html('<div class="Complete-Login Msg"><div class="Logo"><img class="show i1" src="http://intranet.nidec.local/testes/lnc/assets/circle-check-regular.svg" alt="" srcset=""></div><div class="Title"><p>Senha criada com sucesso</p></div><div class="text"><p>Sua senha foi criada, agora você pode fazer login.</p></div><button class="Close-pop btn btn-success">OK</button></div>');
+      
+    }, error: function (response){
+      console.log(response.responseText);
+    }
+  });
+}

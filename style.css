@@ -30,6 +30,63 @@ body {
     justify-content: space-between;
 }
 
+.header{
+    width: 100%;
+    padding: 15px;
+}
+
+.login{
+    position: relative;
+}
+
+.login-actions{
+    cursor: pointer;
+    padding: 5px 12px;
+    border-radius: 15px;
+    text-decoration: underline 1px solid black;
+    text-underline-offset: 3px;
+    line-height: 1.5rem;
+    transition: 0.2s ease-in-out;
+}
+
+.login-actions:hover{
+    background-color: rgb(45, 133, 106);
+    color: white;
+    text-decoration: underline 1px solid white;
+    transform: scale(0.9);
+    /* font-size: 18px; */
+    transition: 0.2s ease-in-out;
+}
+
+.box{
+    position: absolute;
+    top: 30px;
+    background-color: rgb(231, 231, 231);
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+}
+
+.box ul{
+    list-style: none;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login-option{
+    width: 100%;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.login-option:hover{
+    background-color: rgb(201, 201, 201);
+}
+
 /* Themes */
 
 .ThemeMode{
@@ -140,7 +197,7 @@ body {
 
 .OpenClaim.active{
     background-color: var(--second-back);
-    z-index: 2;
+    z-index: 500;
     padding: 15px;
     border-radius: 15px;
     margin-top: 80px;
@@ -317,6 +374,13 @@ body {
 
 #Resp{
     width: 100%;
+}
+
+.Resp-Logged {
+    padding: 5px;
+    width: 100%;
+    background-color: rgb(169, 215, 230);
+    color: black;
 }
 
 .FileSpace{
@@ -894,6 +958,97 @@ body {
 
 .Nomes .Infield{
     margin: 0;
+}
+
+/* Avisos */
+
+.Msg{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Mensagem de Sucesso */
+
+.Complete-Login .Logo{
+    margin-bottom: 15px;
+}
+
+.Complete-Login img{
+    width: 100px;
+    height: 100px;
+    filter: invert(25%) sepia(81%) saturate(431%) hue-rotate(111deg) brightness(87%) contrast(87%);
+}
+
+.Waiting-Login img{
+    width: 200px;
+    height: 200px;
+}
+
+.Waiting-Login .Title{
+    font-size: 16px;
+}
+
+.Complete-Login .Title{
+    font-size: 18px;
+}
+
+.Complete-Login .text{
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Mudar Senha */
+
+.Password-change{
+    width: 100%;
+}
+
+.Password-change .input-Pass{
+    width: 100%;
+}
+
+.Password-change .input-Pass  input{
+    width: 100%;
+}
+
+.Password-change button{
+    margin: 15px 0px;
+}
+
+.Password-Validation{
+    width: 100%;
+    padding: 5px;
+}
+
+.Password-Validation ul{
+    width: 100%;
+    font-size: 12px;
+    list-style: none;
+}
+
+.val::before{
+    content: '•';
+    font-size: 15px;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.val.right{
+    color: rgb(10, 90, 50);
+}
+
+.val.right:before {
+    content: '✓';
+}
+
+.val.wrong{
+    color: rgb(90, 10, 27);
+}
+
+.val.wrong:before {
+    content: 'X';
 }
 
 /* Media Queries */

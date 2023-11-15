@@ -1,0 +1,151 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.pdf-area{
+    width: 100%;
+}
+
+.header{
+}
+
+.logo{
+    width: 30%;
+}
+
+.title-info{
+    width: 70%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.logo img {
+    width: 10rem;
+}
+
+.lnc{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.lnc-number{
+    color: red;
+    font-size: 25px;
+}
+
+.initial-info{
+    display: grid;
+    grid-template-areas: 
+    "forn"
+    "fail"
+    ;
+}
+
+.Forn-info{
+    grid-area: forn;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.Fail-info{
+    grid-area: fail;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.info-forn{
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.info-fail{
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.title-campo{
+    line-height: 1.5rem;
+}
+
+.data-campo{
+    font-weight: bold;
+}
+
+.photos{
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.photos-info{
+    max-width: 100%;
+    max-height: 1rem;
+    padding: 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.photos-info img{
+    max-height: 1280px;
+    max-width: 400px;
+    object-fit: cover;
+    border: 1px solid black;
+    margin: 5px;
+}
+
+.table-quant{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-quant th, .table-quant td{
+    border: 1px solid black;
+    text-align: center;
+    padding: 5px;
+}
+
+.table-quant th{
+    background-color: rgb(25, 45, 102);
+    color: white;
+    print-color-adjust: exact;
+}
+
+.nidec-info{
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.red-font{
+    color: red;
+}
+
+.instructions pre{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+}
+
+@media print{
+    .table-quant th{
+        background-color: rgb(25, 45, 102);
+        color: white;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .page-break{
+        page-break-before: always;
+    }
+}

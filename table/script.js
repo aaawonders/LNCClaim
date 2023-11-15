@@ -1,5 +1,5 @@
 
-var webAjax = "192.168.15.14";
+var webAjax = "192.168.0.190";
 
 $(document).ready(function () {
 
@@ -240,6 +240,10 @@ function ClaimsTipos(Tipo){
 
 function OpenClaim(LNC){
     console.log(LNC);
+    $(".Popup").addClass("active");
+
+    $(".LNCNum").html(LNC);
+
 }
 
 $('#SearchInput').on('keyup',function () { 
@@ -381,3 +385,139 @@ function closeThis(classe, oldValue){
     $(`.${classe}`).removeClass('Editing');
     // $(`.${classe}`).html(oldValue);
 }
+
+
+$(".close").click(function (e) { 
+    e.preventDefault();
+    
+    if ($(".Popup").hasClass("active")){
+        $(".Popup").removeClass("active");
+    } 
+});
+
+
+
+function tabletoArr(){
+    var Tabela = [];
+    var rawTable = $(".Row.Result")
+    var item = [];
+    rawTable.each(function (index, element) { 
+        var itens = element.children
+        item[index] = {}
+        itens = Array.from(itens).map((row) => {
+            return row.innerText;
+        })
+        item[index].Seq = itens[1]; 
+        item[index].Status = itens[2]; 
+        item[index].LNC = itens[3]; 
+        item[index].Forn = itens[4]; 
+        item[index].Data = itens[5]; 
+        item[index].Dias60 = itens[6]; 
+        item[index].Cod = itens[7];
+        item[index].Motivo = itens[8];
+        item[index].Desc = itens[8];
+        item[index].D8 = itens[9];   
+    });
+
+    Tabela = item
+
+    return Tabela;
+}
+
+
+$(".SheetGen").click(function (e) { 
+    e.preventDefault();
+
+    const encodedData = encodeURIComponent(JSON.stringify(tabletoArr()));
+    const url = `https://${webAjax}/testes/lnc/Ajax/excelExport.php?data=${encodedData}`;
+    window.location.href = url;
+
+});
+
+
+function yearChange(e, year){
+    if ($(e).hasClass("active")){
+        return false;
+    }
+
+    $(".Year").removeClass("active");
+    $(e).addClass("active");
+
+    pageChange($(".page-item")[1], 1, true)
+}
+
+
+
+let currentPage = 1;
+const itemsPerPage = 10;
+
+function pageChange(e, pag, yearpass){
+
+    if ($(e).hasClass("active") || yearpass){
+        return false;
+    }
+
+    var year = $(".Year.active").attr("year");
+
+    $.ajax({
+    url: `https://${webAjax}/testes/lnc/Ajax/tablePags.php`, // URL do script PHP
+    method: "GET",
+    data: { year: year, page: pag, itemsPerPage: itemsPerPage },
+    dataType: "json",
+    success: function(data) {
+
+        console.log(data);
+
+        // $("#dataBody").empty();
+        // data.items.forEach(item => {
+        //     $("#dataBody").append(`<tr><td>${item.id}</td><td>${item.name}</td></tr>`);
+        // });
+
+        // // Construindo os botões de paginação:
+        // $("#pagination").empty();
+        //     for (let i = 1; i <= data.totalPages; i++) {
+        //         $("#pagination").append(`<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#">${i}</a></li>`);
+        //     }
+        // }
+
+        $(".page-item").removeClass("active");
+        $(e).addClass("active");
+
+    }, error: function (error) {
+        console.error(error);
+    }})
+
+}
+
+var ClaimBox = $(".Details");
+
+let isDragging = false;
+let startY;
+let scrollTop;
+
+ClaimBox.mousedown(function (e) { 
+    isDragging = true;
+    startY = e.clientY;
+    scrollTop = ClaimBox.scrollTop();
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+
+  const deltaY = e.clientY - startY;
+  ClaimBox.scrollTop(scrollTop - deltaY);
+});
+
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+});
+
+// Evitar que o cursor do mouse se transforme em texto selecionável
+ClaimBox.on("selectstart", function (e) {
+    e.preventDefault();
+});
+
+// Evitar que o botão direito do mouse abra o menu de contexto
+ClaimBox.on("contextmenu", function (e) {
+    e.preventDefault();
+});

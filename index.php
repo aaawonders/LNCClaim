@@ -1,23 +1,47 @@
 <?php
 
-
-
-
-
 require_once (realpath (__DIR__ .'./src/startPage.php'));
 
-?>
+session_start();
 
+if (isset($_SESSION['Login'])){
+    $loginClass = 'true';
+
+    $Nome = $_SESSION['Nome'];
+    $Sobrenome = $_SESSION['Sobrenome'];
+
+    $loginTools = "<span class='login-actions'>Olá, <b>$Nome</b>...</span><div class='box'><ul>
+            <li class='login-option Perfil'>Perfil</li>
+            <li class='login-option Config'>Configurações</li>
+            <li class='login-option Logoff' onclick='Logoff()'>Sair</li>
+        </ul>
+    </div>";
+    // cookie
+
+} else if ((!isset($_SESSION['Login']))) {
+    $loginClass = 'false';
+    $loginTools = "<a href=''>Fazer Login</a>";
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="login" content="<?php echo $loginClass;?>">
+    <meta name="UserName" content="<?php echo $loginClass;?>">
     <title><?php echo "(".$QuantClaims.") "; ?>Reclamações</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+    <div class="header">
+        <div class="login"><?php echo $loginTools; ?>
+        </div>
+    </div>
     <div class="ThemeMode Moon">
         <img class="Icon Moon" src="./assets/moon-solid.svg" alt="" srcset="">
         <img class="Icon Sun" src="./assets/sun-regular.svg" alt="" srcset="">
@@ -126,8 +150,13 @@ require_once (realpath (__DIR__ .'./src/startPage.php'));
                         </div>
                         <div class="Area6 form-OClaim">
                         <span class="Title-Style">Responsável pela reclamação</span>
-                            <div class="RespSpace divSpace">
-                                <input placeholder="Responsável" class="InputForm" name="Resp" id="Resp">
+                            <div class="RespSpace divSpace"><?php
+                            if (isset($_SESSION['Login'])){
+                                echo "<span class='Resp-Logged'>$Nome $Sobrenome</span>";
+                            } else {
+                                echo "<input placeholder='Responsável' class='InputForm' name='Resp' id='Resp'>";
+                            }
+                            ?>
                             </div>
                         </div>
                     </div>
@@ -233,20 +262,7 @@ require_once (realpath (__DIR__ .'./src/startPage.php'));
                 <button id="OKBtn" class="btn btn-success">OK</button>
             </div>
         </div>
-    </div>
-
-    <div class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="d-flex">
-                <div class="toast-body">
-                Hello, world! This is a toast message.
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-    </div>
-
-    <div class="PUp active">
-        <div class="blur active"></div>
-        <form id="loginForm" class="Loginform active" method="post">
+        <form id="loginForm" class="Loginform" method="post">
             <div class="Title">
                 <span>Fazer Login</span>
             </div>
@@ -256,10 +272,10 @@ require_once (realpath (__DIR__ .'./src/startPage.php'));
             </div>
             <div class="Senha Infield field">
                 <label for="SenhaIn">Senha</label>
-                <input class="inLogin Senha" type="password" name="UserIn" id="SenhaIn" required>
+                <input class="inLogin Senha" type="password" name="SenhaIn" id="SenhaIn" required>
                 <div class="show spass">
-                    <img class="show i1" src="http://intranet.nidec.local/testes/lnc/assets/eye-solid.svg" alt="" srcset="">
-                    <img class="i2" src="http://intranet.nidec.local/testes/lnc/assets/eye-slash-solid.svg" alt="" srcset="">
+                    <img class="show i1" src="https://intranet.nidec.local/testes/lnc/assets/eye-solid.svg" alt="" srcset="">
+                    <img class="i2" src="https://intranet.nidec.local/testes/lnc/assets/eye-slash-solid.svg" alt="" srcset="">
                 </div>
             </div>
             <div class="LembrarSenha field">
@@ -278,6 +294,9 @@ require_once (realpath (__DIR__ .'./src/startPage.php'));
             <div class="Title">
                 <span>Registrar</span>
             </div>
+            <!-- <div class="alert alert-warning d-flex align-items-center"  role="alert">
+                    Conta já existe
+            </div> -->
             <div class="Nomes Infield field">
                 <div class="Nome Infield field">
                     <label for="NomeIn">Nome</label>
@@ -303,8 +322,52 @@ require_once (realpath (__DIR__ .'./src/startPage.php'));
                 <span class="Goto">Tem conta? <a href="" class="GoLogin">Fazer Login</a></span>
             </div>
         </form>
+        <div class="Loginform add">
+            <!-- <div class="Password-change Msg">
+                <div class="text">
+                        <p>Usuário, favor altere a sua senha.</p>
+                </div>
+                <form class="input-Pass" method="post">
+                    <input type="hidden" name="ID" value="">
+                    <input class="inLogin SenhaNew" type="password" name="SenhaNew" id="SenhaNew" onkeyup="Validate(this.value)" required>
+                </form>
+                <button class="Change-Senha btn btn-success">OK</button>
+            </div> -->
+            <!-- <div class="Complete-Login Msg">
+                <div class="Logo">
+                    <img class="show i1" src="http://intranet.nidec.local/testes/lnc/assets/circle-check-regular.svg" alt="" srcset="">
+                </div>
+                <div class="Title">
+                    <p>Conta criada com sucesso</p>
+                </div>
+                <div class="text">
+                    <p>É necessário aprovação da conta por parte do administrador.</p>
+                    <p>Um email será enviado assim que você for aprovado.</p>
+                </div>
+                <button class="Close-pop btn btn-success">OK</button>
+            </div> -->
+            <!-- <div class="Waiting-Login Msg">
+                <div class="Logo">
+                    <img class="" src="http://intranet.nidec.local/testes/lnc/assets/undraw_mindfulness.svg" alt="" srcset="">
+                </div>
+                <div class="Title">
+                    <p>Sua conta está sendo analisada</p>
+                </div>
+                <div class="text">
+                    <p>É necessário esperar a liberação de sua conta</p>
+                </div>
+                <button class="Close-pop btn btn-success">OK</button>
+            </div> -->
     </div>
 
+    <div class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+                <div class="toast-body">
+                Hello, world! This is a toast message.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>

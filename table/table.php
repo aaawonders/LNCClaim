@@ -51,14 +51,15 @@
             <input placeholder="Pesquisar..." type="text" name="SearchInput" id="SearchInput">
             <div class="SuggestArea"></div>
         </div>
+        <div class="SheetGen"><img src="./../assets/file-excel-solid.svg">Gerar Planilha</div>
     </div>
     <div class="Years">
         <ul class="Year-Area">
-            <li class="Year Previous"><</li>
-            <li class="Year Y1">2021</li>
-            <li class="Year Y2">2022</li>
-            <li class="Year Y3">2023</li>
-            <li class="Year Y4 active">2024</li>
+            <li class="Year Previous disabled"><</li>
+            <li class="Year Y1" year="2021" onclick="yearChange(this, 2021)">2021</li>
+            <li class="Year Y2" year="2022" onclick="yearChange(this, 2022)">2022</li>
+            <li class="Year Y3" year="2023" onclick="yearChange(this, 2023)">2023</li>
+            <li class="Year Y4 active" year="2024" onclick="yearChange(this, 2024)">2024</li>
         </ul>
     </div>
     <div class="TableClaim">
@@ -103,12 +104,45 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination">
               <li class="page-item disabled"><a class="page-link" href="#"><</a></li>
-              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item active" onclick="pageChange(this, 1, false)"><a class="page-link" href="#">1</a></li>
+              <li class="page-item" onclick="pageChange(this, 2, false)"><a class="page-link" href="#">2</a></li>
+              <li class="page-item" onclick="pageChange(this, 3, false)"><a class="page-link" href="#">3</a></li>
               <li class="page-item"><a class="page-link" href="#">></a></li>
             </ul>
           </nav>
+    </div>
+    <div class="Popup active">
+        <div class="close">X</div>
+        <div class="MainInfo">
+            <div class="LNCName break">LNC: <p class="LNCNum">022/23</p></div>
+            <div class="ClaimTitle">Carcaça com rebarbas</div>
+            <dic class="ClaimData break">Data: <p class="dataLnc">01/08/2023</p></dic>
+
+        </div>
+        <div class="Details">
+            <div class="box1">
+                <div class="Forn">Fornecedor: <span> Ensinger</span></div>
+                <div class="Forn">Reclamado para: <a href="mailto:carlos@ensinger.com">Carlos</a></div>
+
+                <div class="Forn">Fornecedor: <span></span></div>
+                <div class="Forn">Fornecedor: <span></span></div>
+            </div>
+            <div class="box2"></div>
+        </div>
+        <div class="actions">
+            <a href="" class="btn-sm btn btn-success">Mais informações</a>
+            <button class="btn-sm btn btn-success">Histórico</button>
+            <button class="btn-sm btn btn-success">Media</button>
+            <div class="dropdown">
+                <button class="btn-sm btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Exportar
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Excel</a></li>
+                    <li><a class="dropdown-item" href="#">PDF</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 

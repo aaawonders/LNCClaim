@@ -7,8 +7,13 @@ RewriteRule home ./index.php
 RewriteRule Abrir ./openClaim.php
 
 RewriteRule claim ./table/ClaimFull.php
-RewriteRule claim/([a-zA-Z]+)$ ./table/ClaimFull.php?LNC=$1
+
+RewriteRule ^claim/(\d+)/(\d+)$ ./table/ClaimFull.php?LNC=$2/$1 [QSA,L]
+
+# RewriteRule claim/([a-zA-Z]+)$ ./table/ClaimFull.php?LNC=$1
 
 RewriteRule Claims ./table/table.php
 
 RewriteRule Imagem ./data
+
+RewriteRule Additem ./pages/AddItem.php
